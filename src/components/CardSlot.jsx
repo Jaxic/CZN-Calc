@@ -99,7 +99,7 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
           <div className="text-3xl mb-1">🔒</div>
           <div className="text-xs font-semibold text-gray-600">LOCKED</div>
           {card.cardName && (
-            <div className="text-xs text-gray-500 mt-1 px-1 text-center line-clamp-2">
+            <div className="text-sm font-bold text-gray-900 mt-2 px-2 py-1 text-center line-clamp-2 bg-white bg-opacity-80 rounded">
               {card.cardName}
             </div>
           )}
@@ -111,7 +111,7 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
         <>
           {/* Card name (if available) or type badge */}
           {card.cardName ? (
-            <div className="text-xs font-semibold text-gray-700 mb-1 px-1 text-center line-clamp-2">
+            <div className="text-sm font-bold text-gray-800 mb-1 px-2 text-center line-clamp-2 leading-tight">
               {card.cardName}
             </div>
           ) : (
