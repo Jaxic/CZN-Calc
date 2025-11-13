@@ -13,18 +13,22 @@ const RemovalTracker = () => {
     return 70;
   };
 
-  // Calculate total removal points
-  const calculateTotalRemovalPoints = () => {
+  // Calculate base removal cost
+  const calculateBaseRemovalCost = () => {
     let total = 0;
     for (let i = 0; i < totalRemovals; i++) {
       total += getRemovalCost(i);
     }
-    total += removalsBonusCount * 20;
     return total;
   };
 
+  // Calculate starting card penalty
+  const startingCardPenalty = removalsBonusCount * 20;
+
+  // Total removal points
+  const baseRemovalCost = calculateBaseRemovalCost();
+  const totalRemovalPoints = baseRemovalCost + startingCardPenalty;
   const nextRemovalCost = getRemovalCost(totalRemovals);
-  const totalRemovalPoints = calculateTotalRemovalPoints();
 
   // Visual progress indicator (show up to 5 dots, then show "5+")
   const renderProgressDots = () => {
@@ -66,10 +70,28 @@ const RemovalTracker = () => {
           )}
         </div>
 
-        {/* Current points */}
+        {/* Base cost breakdown */}
         <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-600">Current removal cost:</span>
-          <span className="font-bold text-red-600">{totalRemovalPoints} pts</span>
+          <span className="text-gray-600">Base cost:</span>
+          <span className="font-semibold text-red-600">{baseRemovalCost} pts</span>
+        </div>
+
+        {/* Starting card penalty */}
+        {removalsBonusCount > 0 && (
+          <div className="flex justify-between items-center text-sm">
+            <span className="text-gray-600">Starting cards removed:</span>
+            <span className="font-semibold text-red-700">
+              {removalsBonusCount} × 20 = {startingCardPenalty} pts
+            </span>
+          </div>
+        )}
+
+        {/* Total */}
+        <div className="border-t border-gray-300 pt-2 mt-2">
+          <div className="flex justify-between items-center text-sm">
+            <span className="text-gray-700 font-semibold">Total removal points:</span>
+            <span className="font-bold text-red-600">{totalRemovalPoints} pts</span>
+          </div>
         </div>
 
         {/* Next removal cost */}
@@ -77,16 +99,6 @@ const RemovalTracker = () => {
           <span className="text-gray-600">Next removal adds:</span>
           <span className="font-semibold text-gray-700">{nextRemovalCost} pts</span>
         </div>
-
-        {/* Bonus count */}
-        {removalsBonusCount > 0 && (
-          <div className="flex justify-between items-center text-sm bg-red-50 p-2 rounded">
-            <span className="text-gray-600">Bonus removals (Base/Epiphany):</span>
-            <span className="font-semibold text-red-700">
-              {removalsBonusCount} × 20 = {removalsBonusCount * 20} pts
-            </span>
-          </div>
-        )}
 
         {/* Reference text */}
         <div className="text-xs text-gray-500 mt-2 pt-2 border-t border-gray-300">
