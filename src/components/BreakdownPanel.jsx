@@ -49,7 +49,7 @@ const BreakdownPanel = () => {
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-700">Forbidden Cards: {breakdown.forbiddenCards.count}</span>
-            <span className="font-semibold text-gray-500">(auto-saved)</span>
+            <span className="font-semibold text-red-600">{breakdown.forbiddenCards.points} pts <span className="text-xs text-green-600">(prioritized)</span></span>
           </div>
         </div>
 

@@ -32,11 +32,10 @@ const CardPopup = ({ cardId, onClose }) => {
 
   // Calculate current card points
   const calculateDisplayPoints = () => {
-    if (card.type === 'forbidden') return '0 (Auto-saved)';
-
     let points = 0;
     if (card.type === 'neutral') points = 20;
     if (card.type === 'monster') points = 80;
+    if (card.type === 'forbidden') points = 20;
 
     if (card.epiphanyType === 'regular') points += 10;
     if (card.epiphanyType === 'divine') points += 20;
@@ -89,6 +88,9 @@ const CardPopup = ({ cardId, onClose }) => {
           )}
           {card.isConverted && (
             <div className="text-sm text-gray-600 mt-1">🔄 Converted to Neutral</div>
+          )}
+          {card.type === 'forbidden' && (
+            <div className="text-sm text-green-600 font-semibold mt-1">✓ Prioritized when over cap</div>
           )}
         </div>
 
@@ -163,8 +165,8 @@ const CardPopup = ({ cardId, onClose }) => {
               <div className="font-semibold text-red-700">🗑️ Remove Card</div>
               <div className="text-sm text-gray-600">
                 Mark as removed (adds to removal counter)
-                {(card.type === 'base' || card.epiphanyType !== 'none') && (
-                  <span className="font-semibold"> +20 bonus pts</span>
+                {card.type === 'base' && (
+                  <span className="font-semibold"> +20 starting card penalty</span>
                 )}
               </div>
             </button>

@@ -1,8 +1,9 @@
 import React from 'react';
 import { useDeck } from '../context/DeckContext';
+import { calculateCardPoints } from '../utils/calculations';
 
 const DuplicationTracker = () => {
-  const { totalDuplications } = useDeck();
+  const { totalDuplications, additionalCards } = useDeck();
 
   // Calculate duplication costs
   const getDuplicationCost = (index) => {
@@ -13,8 +14,11 @@ const DuplicationTracker = () => {
     return 70;
   };
 
-  // Calculate total duplication points
-  const calculateTotalDuplicationPoints = () => {
+  // Get duplicated cards and calculate their values
+  const duplicatedCards = additionalCards.filter(card => card.isDuplicate);
+
+  // Calculate base duplication cost
+  const calculateBaseDuplicationCost = () => {
     let total = 0;
     for (let i = 0; i < totalDuplications; i++) {
       total += getDuplicationCost(i);
@@ -22,8 +26,15 @@ const DuplicationTracker = () => {
     return total;
   };
 
+  // Calculate duplicate card values
+  const calculateDuplicateCardValues = () => {
+    return duplicatedCards.reduce((sum, card) => sum + calculateCardPoints(card), 0);
+  };
+
+  const baseDuplicationCost = calculateBaseDuplicationCost();
+  const duplicateCardValues = calculateDuplicateCardValues();
+  const totalDuplicationPoints = baseDuplicationCost + duplicateCardValues;
   const nextDuplicationCost = getDuplicationCost(totalDuplications);
-  const totalDuplicationPoints = calculateTotalDuplicationPoints();
 
   // Visual progress indicator (show up to 5 dots)
   const renderProgressDots = () => {
@@ -65,16 +76,32 @@ const DuplicationTracker = () => {
           )}
         </div>
 
-        {/* Current points */}
+        {/* Duplication cost breakdown */}
         <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-600">Total duplication cost:</span>
-          <span className="font-bold text-indigo-600">{totalDuplicationPoints} pts</span>
+          <span className="text-gray-600">Duplication cost:</span>
+          <span className="font-semibold text-indigo-600">{baseDuplicationCost} pts</span>
+        </div>
+
+        {/* Duplicate card values */}
+        {duplicateCardValues > 0 && (
+          <div className="flex justify-between items-center text-sm">
+            <span className="text-gray-600">Duplicate card values:</span>
+            <span className="font-semibold text-indigo-700">{duplicateCardValues} pts</span>
+          </div>
+        )}
+
+        {/* Total */}
+        <div className="border-t border-gray-300 pt-2 mt-2">
+          <div className="flex justify-between items-center text-sm">
+            <span className="text-gray-700 font-semibold">Total duplication points:</span>
+            <span className="font-bold text-indigo-600">{totalDuplicationPoints} pts</span>
+          </div>
         </div>
 
         {/* Next duplication cost */}
         <div className="flex justify-between items-center text-sm">
           <span className="text-gray-600">Next copy adds:</span>
-          <span className="font-semibold text-gray-700">{nextDuplicationCost} pts</span>
+          <span className="font-semibold text-gray-700">{nextDuplicationCost} pts + card value</span>
         </div>
 
         {/* Reference text */}

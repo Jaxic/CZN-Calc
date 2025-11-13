@@ -40,8 +40,9 @@ export function calculateCardPoints(card) {
       points = 80;
       break;
     case 'forbidden':
-      // Forbidden cards don't count toward limit (auto-saved)
-      return 0;
+      // Forbidden cards are 20 points and DO count toward limit (prioritized when over cap)
+      points = 20;
+      break;
     default:
       points = 0;
   }
@@ -87,27 +88,28 @@ export function calculateRemovalPoints(totalRemovals, bonusCount) {
 }
 
 /**
- * Calculate duplication points based on global duplication count
- * @param {number} totalDuplications - Total number of cards duplicated
+ * Calculate duplication points based on duplicated cards
+ * @param {Array} duplicatedCards - Array of cards that were duplicated
  * @returns {number} Total duplication points
  */
-export function calculateDuplicationPoints(totalDuplications) {
-  // Progressive costs: 1st=0, 2nd=10, 3rd=30, 4th=50, 5th+=70
+export function calculateDuplicationPoints(duplicatedCards) {
+  // Progressive base costs: 1st=0, 2nd=10, 3rd=30, 4th=50, 5th+=70
   const dupCosts = [0, 10, 30, 50];
   let total = 0;
 
-  for (let i = 0; i < totalDuplications; i++) {
-    if (i === 0) {
-      // First duplication is free
-      total += 0;
-    } else if (i <= 3) {
-      // 2nd, 3rd, 4th duplications use the cost array
-      total += dupCosts[i];
+  duplicatedCards.forEach((card, index) => {
+    // Add base duplication cost
+    if (index === 0) {
+      total += 0; // First duplication is free
+    } else if (index <= 3) {
+      total += dupCosts[index]; // 2nd, 3rd, 4th use cost array
     } else {
-      // 5th+ duplications cost 70 each
-      total += 70;
+      total += 70; // 5th+ cost 70 each
     }
-  }
+
+    // Add the card's full value
+    total += calculateCardPoints(card);
+  });
 
   return total;
 }
@@ -134,15 +136,16 @@ export function calculateTotalPoints(deckState) {
     .map(card => calculateCardPoints(card))
     .reduce((sum, points) => sum + points, 0);
 
+  // Get duplicated cards for cost calculation
+  const duplicatedCards = deckState.additionalCards.filter(card => card.isDuplicate);
+
   // Add modification points
   const removalPoints = calculateRemovalPoints(
     deckState.totalRemovals,
     deckState.removalsBonusCount
   );
 
-  const duplicationPoints = calculateDuplicationPoints(
-    deckState.totalDuplications
-  );
+  const duplicationPoints = calculateDuplicationPoints(duplicatedCards);
 
   const conversionPoints = calculateConversionPoints(
     deckState.totalConversions
@@ -208,17 +211,19 @@ export function getPointsBreakdown(deckState) {
   const baseCardsPoints = 0; // Base cards are always 0
   const neutralCardsPoints = neutralCardsCount * 20;
   const monsterCardsPoints = monsterCardsCount * 80;
+  const forbiddenCardsPoints = forbiddenCardsCount * 20; // 20 pts each, prioritized when over cap
   const regularEpiphaniesPoints = regularEpiphanies * 10;
   const divineEpiphaniesPoints = divineEpiphanies * 20;
+
+  // Get duplicated cards for cost calculation
+  const duplicatedCards = deckState.additionalCards.filter(card => card.isDuplicate);
 
   const removalPoints = calculateRemovalPoints(
     deckState.totalRemovals,
     deckState.removalsBonusCount
   );
 
-  const duplicationPoints = calculateDuplicationPoints(
-    deckState.totalDuplications
-  );
+  const duplicationPoints = calculateDuplicationPoints(duplicatedCards);
 
   const conversionPoints = calculateConversionPoints(
     deckState.totalConversions
@@ -228,7 +233,7 @@ export function getPointsBreakdown(deckState) {
     baseCards: { count: baseCardsCount, points: baseCardsPoints },
     neutralCards: { count: neutralCardsCount, points: neutralCardsPoints },
     monsterCards: { count: monsterCardsCount, points: monsterCardsPoints },
-    forbiddenCards: { count: forbiddenCardsCount, points: 0 },
+    forbiddenCards: { count: forbiddenCardsCount, points: forbiddenCardsPoints },
     regularEpiphanies: { count: regularEpiphanies, points: regularEpiphaniesPoints },
     divineEpiphanies: { count: divineEpiphanies, points: divineEpiphaniesPoints },
     removals: { count: deckState.totalRemovals, bonusCount: deckState.removalsBonusCount, points: removalPoints },

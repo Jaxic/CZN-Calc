@@ -103,8 +103,8 @@ export const DeckProvider = ({ children }) => {
     // Update counters
     setTotalRemovals(prev => prev + 1);
 
-    // Check if bonus applies (Base card OR has epiphany)
-    if (cardToRemove && (cardToRemove.type === 'base' || cardToRemove.epiphanyType !== 'none')) {
+    // Check if starting card penalty applies (only for the 8 base cards)
+    if (cardToRemove && cardToRemove.type === 'base') {
       setRemovalsBonusCount(prev => prev + 1);
     }
   };
