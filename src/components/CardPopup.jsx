@@ -105,7 +105,9 @@ const CardPopup = ({ cardId, onClose }) => {
                 className="w-full py-3 px-4 rounded-lg text-left border-2 border-blue-300 bg-blue-50 hover:bg-blue-100 transition-colors"
               >
                 <div className="font-semibold text-blue-700">✨ Add Regular Epiphany</div>
-                <div className="text-sm text-gray-600">+10 points to this card</div>
+                <div className="text-sm text-gray-600">
+                  {card.type === 'base' ? 'FREE (0 points on base cards)' : '+10 points to this card'}
+                </div>
               </button>
 
               <button
