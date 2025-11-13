@@ -208,6 +208,7 @@ export function getPointsBreakdown(deckState) {
   const baseCardsPoints = 0; // Base cards are always 0
   const neutralCardsPoints = neutralCardsCount * 20;
   const monsterCardsPoints = monsterCardsCount * 80;
+  const forbiddenCardsPoints = forbiddenCardsCount * 20; // 20 pts each, but don't count toward limit
   const regularEpiphaniesPoints = regularEpiphanies * 10;
   const divineEpiphaniesPoints = divineEpiphanies * 20;
 
@@ -228,7 +229,7 @@ export function getPointsBreakdown(deckState) {
     baseCards: { count: baseCardsCount, points: baseCardsPoints },
     neutralCards: { count: neutralCardsCount, points: neutralCardsPoints },
     monsterCards: { count: monsterCardsCount, points: monsterCardsPoints },
-    forbiddenCards: { count: forbiddenCardsCount, points: 0 },
+    forbiddenCards: { count: forbiddenCardsCount, points: forbiddenCardsPoints },
     regularEpiphanies: { count: regularEpiphanies, points: regularEpiphaniesPoints },
     divineEpiphanies: { count: divineEpiphanies, points: divineEpiphaniesPoints },
     removals: { count: deckState.totalRemovals, bonusCount: deckState.removalsBonusCount, points: removalPoints },

@@ -50,11 +50,11 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
   // Calculate card points display
   const getCardPoints = () => {
     if (card.isRemoved) return 0;
-    if (card.type === 'forbidden') return 0;
 
     let points = 0;
     if (card.type === 'neutral') points = 20;
     if (card.type === 'monster') points = 80;
+    if (card.type === 'forbidden') points = 20;
 
     if (card.epiphanyType === 'regular') points += 10;
     if (card.epiphanyType === 'divine') points += 20;
