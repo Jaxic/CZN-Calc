@@ -46,7 +46,7 @@ const DuplicationTracker = () => {
         <div
           key={i}
           className={`w-3 h-3 rounded-full ${
-            i < totalDuplications ? 'bg-indigo-500' : 'bg-gray-300'
+            i < totalDuplications ? 'bg-indigo-500 dark:bg-indigo-400' : 'bg-gray-300 dark:bg-gray-600'
           }`}
         />
       );
@@ -56,10 +56,10 @@ const DuplicationTracker = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-3 rounded-lg border border-gray-300">
+    <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg border border-gray-300 dark:border-gray-600">
       <div className="flex items-center justify-between mb-2">
-        <h4 className="text-sm font-bold text-gray-800">📋 Copies</h4>
-        <span className="text-sm font-bold text-indigo-600">{totalDuplications}</span>
+        <h4 className="text-sm font-bold text-gray-800 dark:text-gray-100">📋 Copies</h4>
+        <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{totalDuplications}</span>
       </div>
 
       {/* Visual progress */}
@@ -68,14 +68,14 @@ const DuplicationTracker = () => {
           {renderProgressDots()}
         </div>
         {totalDuplications > 5 && (
-          <span className="text-xs font-semibold text-indigo-600">({totalDuplications})</span>
+          <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">({totalDuplications})</span>
         )}
       </div>
 
       {/* Next duplication cost */}
       <div className="flex justify-between items-center text-xs">
-        <span className="text-gray-600">Next adds:</span>
-        <span className="font-semibold text-gray-700">{nextDuplicationCost} pts + card value</span>
+        <span className="text-gray-600 dark:text-gray-300">Next adds:</span>
+        <span className="font-semibold text-gray-700 dark:text-gray-200">{nextDuplicationCost} pts + card value</span>
       </div>
     </div>
   );

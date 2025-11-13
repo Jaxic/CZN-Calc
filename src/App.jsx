@@ -1,5 +1,6 @@
 import React from 'react';
 import { DeckProvider } from './context/DeckContext';
+import { ThemeProvider } from './context/ThemeContext';
 import CharacterSelector from './components/CharacterSelector';
 import TierSelector from './components/TierSelector';
 import StatusBar from './components/StatusBar';
@@ -8,48 +9,56 @@ import AdditionalCardsSection from './components/AdditionalCardsSection';
 import RemovalTracker from './components/RemovalTracker';
 import DuplicationTracker from './components/DuplicationTracker';
 import BreakdownPanel from './components/BreakdownPanel';
+import ThemeToggle from './components/ThemeToggle';
 
 function App() {
   return (
-    <DeckProvider>
-      <div className="min-h-screen bg-gray-50">
-        {/* Header */}
-        <header className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-6 shadow-lg">
-          <div className="container mx-auto px-4">
-            <h1 className="text-3xl md:text-4xl font-bold text-center">
-              CZN Chaos Run Calculator
-            </h1>
-            <p className="text-center text-blue-100 mt-2 text-sm md:text-base">
-              Track your Save Data points and stay within tier limits
-            </p>
-          </div>
-        </header>
-
-        {/* Main Content */}
-        <main className="container mx-auto px-4 py-6">
-          {/* Character, Tier Selector & Status Bar */}
-          <div className="bg-white rounded-lg shadow-md p-4 md:p-6 mb-6">
-            <div className="space-y-4">
-              <CharacterSelector />
-              <TierSelector />
-              <StatusBar />
-            </div>
-          </div>
-
-          {/* Two-column layout on desktop, stacked on mobile */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left column: Cards */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Base Cards */}
-              <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
-                <BaseCardsSection />
+    <ThemeProvider>
+      <DeckProvider>
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+          {/* Header */}
+          <header className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-800 dark:to-purple-800 text-white py-6 shadow-lg">
+            <div className="container mx-auto px-4">
+              <div className="flex justify-between items-center mb-2">
+                <div className="flex-1"></div>
+                <h1 className="text-3xl md:text-4xl font-bold text-center flex-1">
+                  CZN Chaos Run Calculator
+                </h1>
+                <div className="flex-1 flex justify-end">
+                  <ThemeToggle />
+                </div>
               </div>
+              <p className="text-center text-blue-100 dark:text-blue-200 mt-2 text-sm md:text-base">
+                Track your Save Data points and stay within tier limits
+              </p>
+            </div>
+          </header>
 
-              {/* Additional Cards */}
-              <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
-                <AdditionalCardsSection />
+          {/* Main Content */}
+          <main className="container mx-auto px-4 py-6">
+            {/* Character, Tier Selector & Status Bar */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 mb-6 transition-colors">
+              <div className="space-y-4">
+                <CharacterSelector />
+                <TierSelector />
+                <StatusBar />
               </div>
             </div>
+
+            {/* Two-column layout on desktop, stacked on mobile */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Left column: Cards */}
+              <div className="lg:col-span-2 space-y-6">
+                {/* Base Cards */}
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 transition-colors">
+                  <BaseCardsSection />
+                </div>
+
+                {/* Additional Cards */}
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 transition-colors">
+                  <AdditionalCardsSection />
+                </div>
+              </div>
 
             {/* Right column: Breakdown Panel and Trackers */}
             <div className="lg:col-span-1">
@@ -66,19 +75,20 @@ function App() {
           </div>
         </main>
 
-        {/* Footer */}
-        <footer className="bg-gray-800 text-gray-300 py-6 mt-12">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-sm">
-              Chaos Zero Nightmare - Chaos Run Save Data Calculator
-            </p>
-            <p className="text-xs text-gray-500 mt-2">
-              Calculate your deck's Save Data point value in real-time
-            </p>
-          </div>
-        </footer>
-      </div>
-    </DeckProvider>
+          {/* Footer */}
+          <footer className="bg-gray-800 dark:bg-gray-950 text-gray-300 dark:text-gray-400 py-6 mt-12 transition-colors">
+            <div className="container mx-auto px-4 text-center">
+              <p className="text-sm">
+                Chaos Zero Nightmare - Chaos Run Save Data Calculator
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-600 mt-2">
+                Calculate your deck's Save Data point value in real-time
+              </p>
+            </div>
+          </footer>
+        </div>
+      </DeckProvider>
+    </ThemeProvider>
   );
 }
 
