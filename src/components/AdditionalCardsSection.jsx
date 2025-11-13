@@ -9,9 +9,9 @@ const AdditionalCardsSection = () => {
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [showTypeSelector, setShowTypeSelector] = useState(false);
 
-  // Calculate number of empty slots to show (always show at least 12 total slots)
-  const minSlots = 12;
-  const emptySlots = Math.max(0, minSlots - additionalCards.length);
+  // Calculate number of empty slots to show (start with 4 slots, expand as needed)
+  // Show 4 slots if empty, otherwise show 2 empty slots for adding more
+  const emptySlots = additionalCards.length === 0 ? 4 : 2;
 
   const handleCardClick = (cardId) => {
     setSelectedCardId(cardId);
