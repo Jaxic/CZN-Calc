@@ -3,13 +3,19 @@ import { useDeck } from '../context/DeckContext';
 import { getPointsBreakdown, getStatus } from '../utils/calculations';
 
 const BreakdownPanel = () => {
-  const { deckState, currentPoints, cap } = useDeck();
+  const { deckState, currentPoints, cap, resetRun } = useDeck();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const breakdown = getPointsBreakdown(deckState);
   const status = getStatus(currentPoints, cap);
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
+  };
+
+  const handleResetRun = () => {
+    if (window.confirm('Are you sure you want to reset the entire run? This will clear all cards and progress.')) {
+      resetRun();
+    }
   };
 
   return (
@@ -102,6 +108,14 @@ const BreakdownPanel = () => {
             {status.icon} {status.message}
           </div>
         </div>
+
+        {/* Reset Button */}
+        <button
+          onClick={handleResetRun}
+          className="w-full mt-4 py-2 px-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors shadow-md"
+        >
+          Reset Run
+        </button>
       </div>
 
       {/* Mobile: Show summary when collapsed */}

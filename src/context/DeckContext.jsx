@@ -166,6 +166,23 @@ export const DeckProvider = ({ children }) => {
     return [...baseCards, ...additionalCards].find(c => c.id === cardId);
   };
 
+  // Reset the entire run
+  const resetRun = () => {
+    // Reset to 8 base cards (4 active, 4 locked)
+    const resetBaseCards = [
+      ...Array(4).fill(null).map(() => createCard('base', false)),
+      ...Array(4).fill(null).map(() => createCard('base', true)),
+    ];
+
+    setTier(8); // Reset to Tier 8
+    setBaseCards(resetBaseCards);
+    setAdditionalCards([]);
+    setTotalRemovals(0);
+    setRemovalsBonusCount(0);
+    setTotalDuplications(0);
+    setTotalConversions(0);
+  };
+
   const value = {
     // State
     tier,
@@ -188,6 +205,7 @@ export const DeckProvider = ({ children }) => {
     convertCard,
     duplicateCard,
     getCard,
+    resetRun,
   };
 
   return <DeckContext.Provider value={value}>{children}</DeckContext.Provider>;
