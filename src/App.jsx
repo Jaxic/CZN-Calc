@@ -17,7 +17,7 @@ function App() {
       <DeckProvider>
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
           {/* Header */}
-          <header className="bg-gradient-to-r from-orange-500 to-orange-600 dark:from-orange-700 dark:to-orange-800 text-white py-6 shadow-lg">
+          <header className="bg-gradient-to-r from-orange-500 to-yellow-500 dark:from-orange-700 dark:to-yellow-600 text-white py-6 shadow-lg">
             <div className="container mx-auto px-4">
               <div className="flex justify-between items-center mb-2">
                 <div className="flex-1"></div>
