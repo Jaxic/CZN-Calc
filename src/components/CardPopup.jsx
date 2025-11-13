@@ -30,6 +30,15 @@ const CardPopup = ({ cardId, onClose }) => {
     onClose();
   };
 
+  // Calculate duplication cost based on index
+  const getDuplicationCost = (index) => {
+    if (index === 0) return 0;
+    if (index === 1) return 10;
+    if (index === 2) return 30;
+    if (index === 3) return 50;
+    return 70;
+  };
+
   // Calculate current card points
   const calculateDisplayPoints = () => {
     let points = 0;
@@ -45,6 +54,11 @@ const CardPopup = ({ cardId, onClose }) => {
       // else: free for base cards
     }
     if (card.epiphanyType === 'divine') points += 20;
+
+    // Add duplication cost if this is a duplicated card
+    if (card.isDuplicate && card.duplicationIndex !== undefined) {
+      points += getDuplicationCost(card.duplicationIndex);
+    }
 
     return `${points} pts`;
   };
@@ -160,7 +174,7 @@ const CardPopup = ({ cardId, onClose }) => {
               onClick={handleDuplicate}
               className="w-full py-3 px-4 rounded-lg text-left border-2 border-indigo-300 bg-indigo-50 hover:bg-indigo-100 transition-colors"
             >
-              <div className="font-semibold text-indigo-700">📋 Duplicate Card</div>
+              <div className="font-semibold text-indigo-700">📋 Copy Card</div>
               <div className="text-sm text-gray-600">Create a copy (inherits all properties)</div>
             </button>
           )}

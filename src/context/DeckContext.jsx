@@ -152,6 +152,7 @@ export const DeckProvider = ({ children }) => {
         isConverted: sourceCard.isConverted,
         isDuplicate: true,
         originalCardId: cardId,
+        duplicationIndex: totalDuplications, // Track which copy this is (0, 1, 2, etc.)
       };
 
       setAdditionalCards(prev => [...prev, duplicateCard]);

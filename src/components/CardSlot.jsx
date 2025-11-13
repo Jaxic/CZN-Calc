@@ -47,6 +47,15 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
 
   const typeInfo = getCardTypeInfo();
 
+  // Calculate duplication cost based on index
+  const getDuplicationCost = (index) => {
+    if (index === 0) return 0;
+    if (index === 1) return 10;
+    if (index === 2) return 30;
+    if (index === 3) return 50;
+    return 70;
+  };
+
   // Calculate card points display
   const getCardPoints = () => {
     if (card.isRemoved) {
@@ -68,6 +77,11 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
       // else: free for base cards, add 0
     }
     if (card.epiphanyType === 'divine') points += 20;
+
+    // Add duplication cost if this is a duplicated card
+    if (card.isDuplicate && card.duplicationIndex !== undefined) {
+      points += getDuplicationCost(card.duplicationIndex);
+    }
 
     return points;
   };
