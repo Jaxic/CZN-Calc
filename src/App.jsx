@@ -17,7 +17,7 @@ function App() {
       <DeckProvider>
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
           {/* Header */}
-          <header className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-800 dark:to-purple-800 text-white py-6 shadow-lg">
+          <header className="bg-gradient-to-r from-orange-500 to-orange-600 dark:from-orange-700 dark:to-orange-800 text-white py-6 shadow-lg">
             <div className="container mx-auto px-4">
               <div className="flex justify-between items-center mb-2">
                 <div className="flex-1"></div>
@@ -28,7 +28,7 @@ function App() {
                   <ThemeToggle />
                 </div>
               </div>
-              <p className="text-center text-blue-100 dark:text-blue-200 mt-2 text-sm md:text-base">
+              <p className="text-center text-orange-100 dark:text-orange-200 mt-2 text-sm md:text-base">
                 Track your Save Data points and stay within tier limits
               </p>
             </div>
