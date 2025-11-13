@@ -18,7 +18,7 @@ const CharacterSelector = () => {
       <label htmlFor="character-select" className="block text-sm font-semibold text-gray-700 dark:text-gray-200">
         Select Character
       </label>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center">
         <select
           id="character-select"
           value={selectedCharacter || ''}
@@ -36,7 +36,7 @@ const CharacterSelector = () => {
           href="https://buymeacoffee.com/jaxic"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-2 bg-orange-500 hover:bg-orange-600 dark:bg-orange-600 dark:hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors shadow-md flex items-center gap-2"
+          className="ml-auto px-6 py-2 bg-orange-500 hover:bg-orange-600 dark:bg-orange-600 dark:hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors shadow-md flex items-center gap-2"
         >
           <span>☕</span>
           <span>Buy Me a Coffee</span>
