@@ -48,10 +48,14 @@ export function calculateCardPoints(card) {
   }
 
   // Add epiphany modifiers (only ONE per card)
+  // Special rule: Regular epiphanies on base cards are FREE
   if (card.epiphanyType === 'regular') {
-    points += 10;
+    if (card.type !== 'base') {
+      points += 10;
+    }
+    // else: free for base cards
   } else if (card.epiphanyType === 'divine') {
-    points += 20;
+    points += 20; // Divine always costs 20 regardless of card type
   }
 
   return points;
@@ -207,12 +211,15 @@ export function getPointsBreakdown(deckState) {
   const regularEpiphanies = activeCards.filter(c => c.epiphanyType === 'regular').length;
   const divineEpiphanies = activeCards.filter(c => c.epiphanyType === 'divine').length;
 
+  // Count regular epiphanies that cost points (NOT on base cards - those are free)
+  const regularEpiphaniesOnNonBase = activeCards.filter(c => c.epiphanyType === 'regular' && c.type !== 'base').length;
+
   // Calculate points by category
   const baseCardsPoints = 0; // Base cards are always 0
   const neutralCardsPoints = neutralCardsCount * 20;
   const monsterCardsPoints = monsterCardsCount * 80;
   const forbiddenCardsPoints = forbiddenCardsCount * 20; // 20 pts each, prioritized when over cap
-  const regularEpiphaniesPoints = regularEpiphanies * 10;
+  const regularEpiphaniesPoints = regularEpiphaniesOnNonBase * 10; // Regular epiphanies on base cards are FREE
   const divineEpiphaniesPoints = divineEpiphanies * 20;
 
   // Get duplicated cards for cost calculation
