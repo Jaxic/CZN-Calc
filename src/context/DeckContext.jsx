@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { calculateTotalPoints, TIER_CAPS } from '../utils/calculations';
+import { CHARACTERS } from '../data/characters';
 
 const DeckContext = createContext();
 
@@ -16,10 +17,11 @@ let cardIdCounter = 0;
 const generateCardId = () => `card-${++cardIdCounter}`;
 
 // Helper to create a new card
-const createCard = (type = 'base', isLocked = false) => ({
+const createCard = (type = 'base', isLocked = false, cardName = null) => ({
   id: generateCardId(),
   type,
   isLocked,
+  cardName,
   epiphanyType: 'none',
   isRemoved: false,
   isConverted: false,
@@ -37,6 +39,7 @@ export const DeckProvider = ({ children }) => {
   const [tier, setTier] = useState(8); // Default: Tier 8
   const [baseCards, setBaseCards] = useState(initialBaseCards);
   const [additionalCards, setAdditionalCards] = useState([]);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
 
   // Global counters
   const [totalRemovals, setTotalRemovals] = useState(0);
@@ -182,6 +185,35 @@ export const DeckProvider = ({ children }) => {
     setRemovalsBonusCount(0);
     setTotalDuplications(0);
     setTotalConversions(0);
+    setSelectedCharacter(null);
+  };
+
+  // Select a character and populate base cards with their cards
+  const selectCharacter = (characterName) => {
+    const character = CHARACTERS[characterName];
+    if (!character) return;
+
+    // Create 8 base cards from character data:
+    // - 3 starting cards + 1st unique card (active)
+    // - Remaining 4 unique cards (locked)
+    const characterBaseCards = [
+      // 3 starting cards (active)
+      ...character.startingCards.map(cardName => createCard('base', false, cardName)),
+      // 1st unique card (active)
+      createCard('base', false, character.uniqueCards[0]),
+      // Remaining 4 unique cards (locked)
+      ...character.uniqueCards.slice(1).map(cardName => createCard('base', true, cardName)),
+    ];
+
+    setBaseCards(characterBaseCards);
+    setSelectedCharacter(characterName);
+
+    // Reset other state
+    setAdditionalCards([]);
+    setTotalRemovals(0);
+    setRemovalsBonusCount(0);
+    setTotalDuplications(0);
+    setTotalConversions(0);
   };
 
   const value = {
@@ -190,6 +222,7 @@ export const DeckProvider = ({ children }) => {
     setTier,
     baseCards,
     additionalCards,
+    selectedCharacter,
     totalRemovals,
     removalsBonusCount,
     totalDuplications,
@@ -207,6 +240,7 @@ export const DeckProvider = ({ children }) => {
     duplicateCard,
     getCard,
     resetRun,
+    selectCharacter,
   };
 
   return <DeckContext.Provider value={value}>{children}</DeckContext.Provider>;

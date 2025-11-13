@@ -1,5 +1,6 @@
 import React from 'react';
 import { DeckProvider } from './context/DeckContext';
+import CharacterSelector from './components/CharacterSelector';
 import TierSelector from './components/TierSelector';
 import StatusBar from './components/StatusBar';
 import BaseCardsSection from './components/BaseCardsSection';
@@ -26,9 +27,10 @@ function App() {
 
         {/* Main Content */}
         <main className="container mx-auto px-4 py-6">
-          {/* Tier Selector & Status Bar */}
+          {/* Character, Tier Selector & Status Bar */}
           <div className="bg-white rounded-lg shadow-md p-4 md:p-6 mb-6">
             <div className="space-y-4">
+              <CharacterSelector />
               <TierSelector />
               <StatusBar />
             </div>
