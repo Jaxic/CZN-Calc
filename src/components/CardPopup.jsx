@@ -37,7 +37,13 @@ const CardPopup = ({ cardId, onClose }) => {
     if (card.type === 'monster') points = 80;
     if (card.type === 'forbidden') points = 20;
 
-    if (card.epiphanyType === 'regular') points += 10;
+    // Regular epiphanies are FREE on base cards
+    if (card.epiphanyType === 'regular') {
+      if (card.type !== 'base') {
+        points += 10;
+      }
+      // else: free for base cards
+    }
     if (card.epiphanyType === 'divine') points += 20;
 
     return `${points} pts`;

@@ -49,14 +49,24 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
 
   // Calculate card points display
   const getCardPoints = () => {
-    if (card.isRemoved) return 0;
+    if (card.isRemoved) {
+      // Show removal penalty for base cards
+      if (card.type === 'base') return 20;
+      return 0;
+    }
 
     let points = 0;
     if (card.type === 'neutral') points = 20;
     if (card.type === 'monster') points = 80;
     if (card.type === 'forbidden') points = 20;
 
-    if (card.epiphanyType === 'regular') points += 10;
+    // Regular epiphanies are FREE on base cards
+    if (card.epiphanyType === 'regular') {
+      if (card.type !== 'base') {
+        points += 10;
+      }
+      // else: free for base cards, add 0
+    }
     if (card.epiphanyType === 'divine') points += 20;
 
     return points;
