@@ -36,7 +36,7 @@ function App() {
 
           {/* Two-column layout on desktop, stacked on mobile */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left column: Cards and Trackers */}
+            {/* Left column: Cards */}
             <div className="lg:col-span-2 space-y-6">
               {/* Base Cards */}
               <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
@@ -47,18 +47,18 @@ function App() {
               <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
                 <AdditionalCardsSection />
               </div>
-
-              {/* Trackers (side by side on larger screens) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <RemovalTracker />
-                <DuplicationTracker />
-              </div>
             </div>
 
-            {/* Right column: Breakdown Panel */}
+            {/* Right column: Breakdown Panel and Trackers */}
             <div className="lg:col-span-1">
-              <div className="lg:sticky lg:top-6">
+              <div className="lg:sticky lg:top-6 space-y-4">
                 <BreakdownPanel />
+
+                {/* Compact Trackers */}
+                <div className="space-y-3">
+                  <RemovalTracker />
+                  <DuplicationTracker />
+                </div>
               </div>
             </div>
           </div>

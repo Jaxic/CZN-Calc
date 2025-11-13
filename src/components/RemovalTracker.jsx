@@ -50,60 +50,26 @@ const RemovalTracker = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-4 rounded-lg border-2 border-gray-300">
-      <h3 className="text-lg font-bold text-gray-800 mb-3">Removal Tracker</h3>
+    <div className="bg-gray-100 p-3 rounded-lg border border-gray-300">
+      <div className="flex items-center justify-between mb-2">
+        <h4 className="text-sm font-bold text-gray-800">🗑️ Removals</h4>
+        <span className="text-sm font-bold text-red-600">{totalRemovals}</span>
+      </div>
 
-      <div className="space-y-2">
-        {/* Count display */}
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-semibold text-gray-700">Cards Removed:</span>
-          <span className="text-lg font-bold text-red-600">{totalRemovals}</span>
+      {/* Visual progress */}
+      <div className="flex items-center gap-2 mb-2">
+        <div className="flex gap-1">
+          {renderProgressDots()}
         </div>
-
-        {/* Visual progress */}
-        <div className="flex items-center gap-2">
-          <div className="flex gap-1">
-            {renderProgressDots()}
-          </div>
-          {totalRemovals > 5 && (
-            <span className="text-sm font-semibold text-red-600">({totalRemovals})</span>
-          )}
-        </div>
-
-        {/* Base cost breakdown */}
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-600">Base cost:</span>
-          <span className="font-semibold text-red-600">{baseRemovalCost} pts</span>
-        </div>
-
-        {/* Starting card penalty */}
-        {removalsBonusCount > 0 && (
-          <div className="flex justify-between items-center text-sm">
-            <span className="text-gray-600">Starting cards removed:</span>
-            <span className="font-semibold text-red-700">
-              {removalsBonusCount} × 20 = {startingCardPenalty} pts
-            </span>
-          </div>
+        {totalRemovals > 5 && (
+          <span className="text-xs font-semibold text-red-600">({totalRemovals})</span>
         )}
+      </div>
 
-        {/* Total */}
-        <div className="border-t border-gray-300 pt-2 mt-2">
-          <div className="flex justify-between items-center text-sm">
-            <span className="text-gray-700 font-semibold">Total removal points:</span>
-            <span className="font-bold text-red-600">{totalRemovalPoints} pts</span>
-          </div>
-        </div>
-
-        {/* Next removal cost */}
-        <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-600">Next removal adds:</span>
-          <span className="font-semibold text-gray-700">{nextRemovalCost} pts</span>
-        </div>
-
-        {/* Reference text */}
-        <div className="text-xs text-gray-500 mt-2 pt-2 border-t border-gray-300">
-          Scale: 1st=0, 2nd=10, 3rd=30, 4th=50, 5th+=70
-        </div>
+      {/* Next removal cost */}
+      <div className="flex justify-between items-center text-xs">
+        <span className="text-gray-600">Next adds:</span>
+        <span className="font-semibold text-gray-700">{nextRemovalCost} pts</span>
       </div>
     </div>
   );
