@@ -40,7 +40,7 @@ const RemovalTracker = () => {
         <div
           key={i}
           className={`w-3 h-3 rounded-full ${
-            i < totalRemovals ? 'bg-red-500' : 'bg-gray-300'
+            i < totalRemovals ? 'bg-red-500 dark:bg-red-400' : 'bg-gray-300 dark:bg-gray-600'
           }`}
         />
       );
@@ -50,10 +50,10 @@ const RemovalTracker = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-3 rounded-lg border border-gray-300">
+    <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg border border-gray-300 dark:border-gray-600">
       <div className="flex items-center justify-between mb-2">
-        <h4 className="text-sm font-bold text-gray-800">🗑️ Removals</h4>
-        <span className="text-sm font-bold text-red-600">{totalRemovals}</span>
+        <h4 className="text-sm font-bold text-gray-800 dark:text-gray-100">🗑️ Removals</h4>
+        <span className="text-sm font-bold text-red-600 dark:text-red-400">{totalRemovals}</span>
       </div>
 
       {/* Visual progress */}
@@ -62,14 +62,14 @@ const RemovalTracker = () => {
           {renderProgressDots()}
         </div>
         {totalRemovals > 5 && (
-          <span className="text-xs font-semibold text-red-600">({totalRemovals})</span>
+          <span className="text-xs font-semibold text-red-600 dark:text-red-400">({totalRemovals})</span>
         )}
       </div>
 
       {/* Next removal cost */}
       <div className="flex justify-between items-center text-xs">
-        <span className="text-gray-600">Next adds:</span>
-        <span className="font-semibold text-gray-700">{nextRemovalCost} pts</span>
+        <span className="text-gray-600 dark:text-gray-300">Next adds:</span>
+        <span className="font-semibold text-gray-700 dark:text-gray-200">{nextRemovalCost} pts</span>
       </div>
     </div>
   );

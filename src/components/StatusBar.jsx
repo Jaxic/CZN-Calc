@@ -25,19 +25,19 @@ const StatusBar = () => {
     <div className="space-y-2">
       {/* Points display */}
       <div className="flex items-baseline justify-between">
-        <div className="text-xl font-bold">
+        <div className="text-xl font-bold dark:text-gray-200">
           Current Deck Value:{' '}
           <span className={getStatusColor()}>
             {currentPoints} / {cap}
           </span>
         </div>
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-gray-600 dark:text-gray-400">
           {percentage.toFixed(0)}%
         </div>
       </div>
 
       {/* Progress bar */}
-      <div className="w-full h-6 bg-gray-200 rounded-full overflow-hidden">
+      <div className="w-full h-6 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
         <div
           className={`h-full ${getProgressBarColor()} transition-all duration-300 ease-in-out flex items-center justify-end pr-2`}
           style={{ width: `${percentage}%` }}

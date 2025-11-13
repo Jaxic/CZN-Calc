@@ -81,40 +81,40 @@ const CardPopup = ({ cardId, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-gray-800">Card Options</h2>
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Card Options</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center"
+            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-2xl font-bold w-8 h-8 flex items-center justify-center"
           >
             ×
           </button>
         </div>
 
         {/* Card visual representation */}
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-lg mb-4 text-center border-2 border-gray-300">
+        <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900 dark:to-purple-900 dark:bg-opacity-30 p-6 rounded-lg mb-4 text-center border-2 border-gray-300 dark:border-gray-600">
           <div className="text-6xl mb-2">🎴</div>
-          <div className="font-bold text-lg text-gray-800">{getCardTypeName()}</div>
-          <div className="text-2xl font-bold text-primary mt-2">
+          <div className="font-bold text-lg text-gray-800 dark:text-gray-100">{getCardTypeName()}</div>
+          <div className="text-2xl font-bold text-primary dark:text-blue-400 mt-2">
             {calculateDisplayPoints()}
           </div>
           {card.epiphanyType !== 'none' && (
-            <div className="text-sm font-semibold mt-2 text-purple-600">
+            <div className="text-sm font-semibold mt-2 text-purple-600 dark:text-purple-400">
               {card.epiphanyType === 'regular' && '✨ Has Regular Epiphany'}
               {card.epiphanyType === 'divine' && '🌟 Has Divine Epiphany'}
             </div>
           )}
           {card.isConverted && (
-            <div className="text-sm text-gray-600 mt-1">🔄 Converted to Neutral</div>
+            <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">🔄 Converted to Neutral</div>
           )}
           {card.type === 'forbidden' && (
-            <div className="text-sm text-green-600 font-semibold mt-1">✓ Prioritized when over cap</div>
+            <div className="text-sm text-green-600 dark:text-green-400 font-semibold mt-1">✓ Prioritized when over cap</div>
           )}
         </div>
 
-        <div className="border-t-2 border-gray-200 my-4"></div>
+        <div className="border-t-2 border-gray-200 dark:border-gray-700 my-4"></div>
 
         {/* Action buttons */}
         <div className="space-y-2">
@@ -122,30 +122,30 @@ const CardPopup = ({ cardId, onClose }) => {
             <>
               <button
                 onClick={() => handleAddEpiphany('regular')}
-                className="w-full py-3 px-4 rounded-lg text-left border-2 border-blue-300 bg-blue-50 hover:bg-blue-100 transition-colors"
+                className="w-full py-3 px-4 rounded-lg text-left border-2 border-blue-300 dark:border-blue-600 bg-blue-50 dark:bg-blue-900 dark:bg-opacity-30 hover:bg-blue-100 dark:hover:bg-blue-800 dark:hover:bg-opacity-40 transition-colors"
               >
-                <div className="font-semibold text-blue-700">✨ Add Regular Epiphany</div>
-                <div className="text-sm text-gray-600">
+                <div className="font-semibold text-blue-700 dark:text-blue-300">✨ Add Regular Epiphany</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">
                   {card.type === 'base' ? 'FREE (0 points on base cards)' : '+10 points to this card'}
                 </div>
               </button>
 
               <button
                 onClick={() => handleAddEpiphany('divine')}
-                className="w-full py-3 px-4 rounded-lg text-left border-2 border-purple-300 bg-purple-50 hover:bg-purple-100 transition-colors"
+                className="w-full py-3 px-4 rounded-lg text-left border-2 border-purple-300 dark:border-purple-600 bg-purple-50 dark:bg-purple-900 dark:bg-opacity-30 hover:bg-purple-100 dark:hover:bg-purple-800 dark:hover:bg-opacity-40 transition-colors"
               >
-                <div className="font-semibold text-purple-700">🌟 Add Divine Epiphany</div>
-                <div className="text-sm text-gray-600">+20 points to this card</div>
+                <div className="font-semibold text-purple-700 dark:text-purple-300">🌟 Add Divine Epiphany</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">+20 points to this card</div>
               </button>
             </>
           )}
 
           {!canAddEpiphany && !card.isRemoved && (
-            <div className="w-full py-3 px-4 rounded-lg border-2 border-gray-300 bg-gray-100 opacity-60">
-              <div className="font-semibold text-gray-500">
+            <div className="w-full py-3 px-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 opacity-60">
+              <div className="font-semibold text-gray-500 dark:text-gray-400">
                 {card.epiphanyType !== 'none' ? '✓ Epiphany Already Added' : 'Epiphany Unavailable'}
               </div>
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-500 dark:text-gray-400">
                 Each card can only have one epiphany
               </div>
             </div>
@@ -154,15 +154,15 @@ const CardPopup = ({ cardId, onClose }) => {
           {canConvert ? (
             <button
               onClick={handleConvert}
-              className="w-full py-3 px-4 rounded-lg text-left border-2 border-green-300 bg-green-50 hover:bg-green-100 transition-colors"
+              className="w-full py-3 px-4 rounded-lg text-left border-2 border-green-300 dark:border-green-600 bg-green-50 dark:bg-green-900 dark:bg-opacity-30 hover:bg-green-100 dark:hover:bg-green-800 dark:hover:bg-opacity-40 transition-colors"
             >
-              <div className="font-semibold text-green-700">🔄 Convert to Neutral</div>
-              <div className="text-sm text-gray-600">Changes card type to Neutral (+10 conversion pts)</div>
+              <div className="font-semibold text-green-700 dark:text-green-300">🔄 Convert to Neutral</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Changes card type to Neutral (+10 conversion pts)</div>
             </button>
           ) : (
             !card.isRemoved && (
-              <div className="w-full py-3 px-4 rounded-lg border-2 border-gray-300 bg-gray-100 opacity-60">
-                <div className="font-semibold text-gray-500">
+              <div className="w-full py-3 px-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 opacity-60">
+                <div className="font-semibold text-gray-500 dark:text-gray-400">
                   {card.isConverted ? '✓ Already Converted' : '✓ Already Neutral'}
                 </div>
               </div>
@@ -172,20 +172,20 @@ const CardPopup = ({ cardId, onClose }) => {
           {canDuplicate && (
             <button
               onClick={handleDuplicate}
-              className="w-full py-3 px-4 rounded-lg text-left border-2 border-indigo-300 bg-indigo-50 hover:bg-indigo-100 transition-colors"
+              className="w-full py-3 px-4 rounded-lg text-left border-2 border-indigo-300 dark:border-indigo-600 bg-indigo-50 dark:bg-indigo-900 dark:bg-opacity-30 hover:bg-indigo-100 dark:hover:bg-indigo-800 dark:hover:bg-opacity-40 transition-colors"
             >
-              <div className="font-semibold text-indigo-700">📋 Copy Card</div>
-              <div className="text-sm text-gray-600">Create a copy (inherits all properties)</div>
+              <div className="font-semibold text-indigo-700 dark:text-indigo-300">📋 Copy Card</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Create a copy (inherits all properties)</div>
             </button>
           )}
 
           {canRemove && (
             <button
               onClick={handleRemove}
-              className="w-full py-3 px-4 rounded-lg text-left border-2 border-red-300 bg-red-50 hover:bg-red-100 transition-colors"
+              className="w-full py-3 px-4 rounded-lg text-left border-2 border-red-300 dark:border-red-600 bg-red-50 dark:bg-red-900 dark:bg-opacity-30 hover:bg-red-100 dark:hover:bg-red-800 dark:hover:bg-opacity-40 transition-colors"
             >
-              <div className="font-semibold text-red-700">🗑️ Remove Card</div>
-              <div className="text-sm text-gray-600">
+              <div className="font-semibold text-red-700 dark:text-red-300">🗑️ Remove Card</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">
                 Mark as removed (adds to removal counter)
                 {card.type === 'base' && (
                   <span className="font-semibold"> +20 starting card penalty</span>
@@ -195,9 +195,9 @@ const CardPopup = ({ cardId, onClose }) => {
           )}
 
           {card.isRemoved && (
-            <div className="w-full py-3 px-4 rounded-lg border-2 border-gray-300 bg-gray-100">
-              <div className="font-semibold text-gray-500">🗑️ Card Already Removed</div>
-              <div className="text-sm text-gray-500">This card is marked as removed</div>
+            <div className="w-full py-3 px-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700">
+              <div className="font-semibold text-gray-500 dark:text-gray-400">🗑️ Card Already Removed</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">This card is marked as removed</div>
             </div>
           )}
         </div>
@@ -205,7 +205,7 @@ const CardPopup = ({ cardId, onClose }) => {
         {/* Cancel button */}
         <button
           onClick={onClose}
-          className="w-full mt-4 py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-lg font-semibold text-gray-700 transition-colors"
+          className="w-full mt-4 py-2 px-4 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg font-semibold text-gray-700 dark:text-gray-200 transition-colors"
         >
           Close
         </button>

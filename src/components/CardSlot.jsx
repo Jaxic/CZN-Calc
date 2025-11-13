@@ -5,9 +5,9 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
     return (
       <button
         onClick={onClick}
-        className="w-full h-32 sm:h-36 border-2 border-dashed border-gray-400 rounded-lg bg-gray-50 hover:bg-gray-100 hover:border-primary transition-all flex items-center justify-center group"
+        className="w-full h-32 sm:h-36 border-2 border-dashed border-gray-400 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 hover:border-primary transition-all flex items-center justify-center group"
       >
-        <span className="text-4xl text-gray-400 group-hover:text-primary transition-colors">
+        <span className="text-4xl text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors">
           +
         </span>
       </button>
@@ -19,14 +19,14 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
     const baseClasses = "w-full h-32 sm:h-36 border-2 rounded-lg transition-all flex flex-col items-center justify-center p-2";
 
     if (card.isRemoved) {
-      return `${baseClasses} bg-red-100 border-red-300 opacity-60 cursor-not-allowed`;
+      return `${baseClasses} bg-red-100 dark:bg-red-900 dark:bg-opacity-30 border-red-300 dark:border-red-700 opacity-60 cursor-not-allowed`;
     }
 
     if (card.isLocked) {
-      return `${baseClasses} bg-gray-200 border-gray-400 opacity-50 cursor-pointer hover:opacity-70`;
+      return `${baseClasses} bg-gray-200 dark:bg-gray-700 border-gray-400 dark:border-gray-600 opacity-50 cursor-pointer hover:opacity-70`;
     }
 
-    return `${baseClasses} bg-white border-gray-300 hover:border-primary hover:shadow-md cursor-pointer`;
+    return `${baseClasses} bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-primary hover:shadow-md cursor-pointer`;
   };
 
   // Get card type label and color
@@ -97,21 +97,21 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
       {card.isLocked ? (
         <>
           <div className="text-3xl mb-1">🔒</div>
-          <div className="text-xs font-semibold text-gray-600">LOCKED</div>
+          <div className="text-xs font-semibold text-gray-600 dark:text-gray-400">LOCKED</div>
           {card.cardName && (
-            <div className="text-sm font-bold text-gray-900 mt-2 px-2 py-1 text-center line-clamp-2 bg-white bg-opacity-80 rounded">
+            <div className="text-sm font-bold text-gray-900 dark:text-gray-900 mt-2 px-2 py-1 text-center line-clamp-2 bg-white bg-opacity-80 rounded">
               {card.cardName}
             </div>
           )}
           {!card.cardName && (
-            <div className="text-xs text-gray-500 mt-1">Click to unlock</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Click to unlock</div>
           )}
         </>
       ) : (
         <>
           {/* Card name (if available) or type badge */}
           {card.cardName ? (
-            <div className="text-sm font-bold text-gray-800 mb-1 px-2 text-center line-clamp-2 leading-tight">
+            <div className="text-sm font-bold text-gray-800 dark:text-gray-100 mb-1 px-2 text-center line-clamp-2 leading-tight">
               {card.cardName}
             </div>
           ) : (
@@ -121,13 +121,13 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
           )}
 
           {/* Points display */}
-          <div className="text-2xl font-bold text-gray-800">
+          <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">
             {points} <span className="text-sm">pts</span>
           </div>
 
           {/* Epiphany indicator */}
           {card.epiphanyType !== 'none' && (
-            <div className="text-xs font-semibold mt-1">
+            <div className="text-xs font-semibold mt-1 dark:text-gray-200">
               {card.epiphanyType === 'regular' && '✨ Epiphany'}
               {card.epiphanyType === 'divine' && '🌟 Divine'}
             </div>
@@ -135,12 +135,12 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
 
           {/* Conversion indicator */}
           {card.isConverted && (
-            <div className="text-xs text-gray-500 mt-0.5">🔄 Converted</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">🔄 Converted</div>
           )}
 
           {/* Removed overlay */}
           {card.isRemoved && (
-            <div className="text-xs font-bold text-red-600 mt-1">
+            <div className="text-xs font-bold text-red-600 dark:text-red-400 mt-1">
               🗑️ REMOVED
             </div>
           )}
