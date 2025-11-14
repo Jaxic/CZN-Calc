@@ -172,7 +172,7 @@ export const CHARACTERS = {
       "Maribell Shelter MK.II",
       "Wolves' Dome",
       "Oh... I see",
-      "Shelter Strike."
+      "Shelter Strike"
     ]
   },
   "mei-lin": {
