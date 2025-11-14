@@ -56,6 +56,12 @@ export function calculateCardPoints(card) {
     // else: free for base cards
   } else if (card.epiphanyType === 'divine') {
     points += 20; // Divine always costs 20 regardless of card type
+
+    // IN-GAME BUG: Neutral cards with divine epiphanies incorrectly also count
+    // the regular epiphany proc (+10), making them cost 50 instead of 40
+    if (card.type === 'neutral') {
+      points += 10; // Bug: adds regular epiphany proc
+    }
   }
 
   return points;
@@ -221,13 +227,16 @@ export function getPointsBreakdown(deckState) {
   // Count regular epiphanies that cost points (NOT on base cards - those are free)
   const regularEpiphaniesOnNonBase = activeCards.filter(c => c.epiphanyType === 'regular' && c.type !== 'base').length;
 
+  // Count neutral cards with divine epiphanies (for in-game bug calculation)
+  const neutralCardsWithDivine = activeCards.filter(c => c.type === 'neutral' && c.epiphanyType === 'divine').length;
+
   // Calculate points by category
   const baseCardsPoints = 0; // Base cards are always 0
   const neutralCardsPoints = neutralCardsCount * 20;
   const monsterCardsPoints = monsterCardsCount * 80;
   const forbiddenCardsPoints = forbiddenCardsCount * 20; // 20 pts each, prioritized when over cap
   const regularEpiphaniesPoints = regularEpiphaniesOnNonBase * 10; // Regular epiphanies on base cards are FREE
-  const divineEpiphaniesPoints = divineEpiphanies * 20;
+  const divineEpiphaniesPoints = divineEpiphanies * 20 + neutralCardsWithDivine * 10; // Bug: +10 for neutral cards with divine
 
   // Get duplicated cards for cost calculation
   const duplicatedCards = deckState.additionalCards.filter(card => card.isDuplicate);
