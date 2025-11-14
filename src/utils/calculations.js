@@ -214,23 +214,25 @@ export function getStatus(current, cap) {
 export function getPointsBreakdown(deckState) {
   const allCards = [...deckState.baseCards, ...deckState.additionalCards];
 
-  // Count cards by type (excluding removed cards)
+  // Count cards by type (excluding removed cards and duplicates for breakdown)
+  // Duplicates are excluded because their values are counted in the Duplications section
   const activeCards = allCards.filter(card => !card.isRemoved);
+  const activeNonDuplicates = activeCards.filter(card => !card.isDuplicate);
 
-  const baseCardsCount = activeCards.filter(c => c.type === 'base').length;
-  const neutralCardsCount = activeCards.filter(c => c.type === 'neutral').length;
-  const monsterCardsCount = activeCards.filter(c => c.type === 'monster').length;
-  const forbiddenCardsCount = activeCards.filter(c => c.type === 'forbidden').length;
+  const baseCardsCount = activeNonDuplicates.filter(c => c.type === 'base').length;
+  const neutralCardsCount = activeNonDuplicates.filter(c => c.type === 'neutral').length;
+  const monsterCardsCount = activeNonDuplicates.filter(c => c.type === 'monster').length;
+  const forbiddenCardsCount = activeNonDuplicates.filter(c => c.type === 'forbidden').length;
 
-  // Count epiphanies
-  const regularEpiphanies = activeCards.filter(c => c.epiphanyType === 'regular').length;
-  const divineEpiphanies = activeCards.filter(c => c.epiphanyType === 'divine').length;
+  // Count epiphanies (excluding duplicates to avoid double-counting in breakdown)
+  const regularEpiphanies = activeNonDuplicates.filter(c => c.epiphanyType === 'regular').length;
+  const divineEpiphanies = activeNonDuplicates.filter(c => c.epiphanyType === 'divine').length;
 
   // Count regular epiphanies that cost points (NOT on base cards - those are free)
-  const regularEpiphaniesOnNonBase = activeCards.filter(c => c.epiphanyType === 'regular' && c.type !== 'base').length;
+  const regularEpiphaniesOnNonBase = activeNonDuplicates.filter(c => c.epiphanyType === 'regular' && c.type !== 'base').length;
 
   // Count neutral cards with divine epiphanies (for in-game bug calculation)
-  const neutralCardsWithDivine = activeCards.filter(c => c.type === 'neutral' && c.epiphanyType === 'divine').length;
+  const neutralCardsWithDivine = activeNonDuplicates.filter(c => c.type === 'neutral' && c.epiphanyType === 'divine').length;
 
   // Calculate points by category
   const baseCardsPoints = 0; // Base cards are always 0
