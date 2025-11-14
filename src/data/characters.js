@@ -165,14 +165,14 @@ export const CHARACTERS = {
     "startingCards": [
       "Shelter Kick",
       "Shelter Defense",
-      "Shelter Defense"
+      "Shelter Hold"
     ],
     "uniqueCards": [
-      "Shelter Hold",
       "Resolute Blitz",
       "Maribell Shelter MK.II",
       "Wolves' Dome",
-      "Oh... I see."
+      "Oh... I see",
+      "Shelter Strike."
     ]
   },
   "mei-lin": {
