@@ -52,7 +52,7 @@ const RemovalTracker = () => {
   return (
     <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg border border-gray-300 dark:border-gray-600">
       <div className="flex items-center justify-between mb-2">
-        <h4 className="text-sm font-bold text-gray-800 dark:text-gray-100">🗑️ Removals</h4>
+        <h4 className="text-sm font-bold text-gray-800 dark:text-gray-100">Removals</h4>
         <span className="text-sm font-bold text-red-600 dark:text-red-400">{totalRemovals}</span>
       </div>
 
