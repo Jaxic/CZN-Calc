@@ -36,7 +36,7 @@ const CardPopup = ({ cardId, onClose }) => {
     const actionText = isOriginalBaseCard ? 'reset' : 'delete';
     const message = isOriginalBaseCard
       ? 'Are you sure you want to reset this card? This will remove all modifications (epiphanies, conversions, removals) but keep the card name and lock state.'
-      : 'Are you sure you want to delete this card? This action cannot be undone (except via Undo button).';
+      : 'Are you sure you want to delete this card? (This action can be undone via Undo button)';
 
     if (window.confirm(message)) {
       deleteOrResetCard(cardId);
