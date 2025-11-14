@@ -257,6 +257,90 @@ export const DeckProvider = ({ children }) => {
     }
   };
 
+  // Delete or reset a card
+  const deleteOrResetCard = (cardId) => {
+    // Check if it's a base card
+    const baseCardIndex = currentState.baseCards.findIndex(c => c.id === cardId);
+
+    if (baseCardIndex !== -1) {
+      // BASE CARD: Reset to initial state but keep cardName and isLocked
+      const card = currentState.baseCards[baseCardIndex];
+
+      // Calculate counter decrements
+      const removalsDecrement = card.isRemoved ? 1 : 0;
+      const removalsBonusDecrement = (card.isRemoved && card.type === 'base') ? 1 : 0;
+      const conversionsDecrement = card.isConverted ? 1 : 0;
+
+      // Reset card to initial state (preserving cardName and isLocked)
+      const resetCard = {
+        ...card,
+        type: 'base', // Restore to base if it was converted
+        epiphanyType: 'none',
+        isRemoved: false,
+        isConverted: false,
+        // Keep: cardName, isLocked, id
+      };
+
+      updateCurrentState({
+        baseCards: currentState.baseCards.map((c, i) =>
+          i === baseCardIndex ? resetCard : c
+        ),
+        totalRemovals: currentState.totalRemovals - removalsDecrement,
+        removalsBonusCount: currentState.removalsBonusCount - removalsBonusDecrement,
+        totalConversions: currentState.totalConversions - conversionsDecrement,
+      });
+      return;
+    }
+
+    // Check if it's an additional card
+    const additionalCard = currentState.additionalCards.find(c => c.id === cardId);
+
+    if (additionalCard) {
+      // ADDITIONAL CARD: Delete entirely
+
+      // Calculate counter decrements
+      const removalsDecrement = additionalCard.isRemoved ? 1 : 0;
+      const removalsBonusDecrement = (additionalCard.isRemoved && additionalCard.type === 'base') ? 1 : 0;
+      const conversionsDecrement = additionalCard.isConverted ? 1 : 0;
+      const duplicationsDecrement = additionalCard.isDuplicate ? 1 : 0;
+
+      // Remove the card from array
+      const remainingCards = currentState.additionalCards.filter(c => c.id !== cardId);
+
+      // Reindex duplicates if we deleted a duplicate
+      let finalCards = remainingCards;
+      if (additionalCard.isDuplicate) {
+        // Get all remaining duplicates and sort by current index
+        const duplicates = remainingCards.filter(c => c.isDuplicate);
+        const sortedDuplicates = [...duplicates].sort((a, b) =>
+          (a.duplicationIndex || 0) - (b.duplicationIndex || 0)
+        );
+
+        // Create a map of card IDs to new indices
+        const indexMap = new Map();
+        sortedDuplicates.forEach((dup, newIndex) => {
+          indexMap.set(dup.id, newIndex);
+        });
+
+        // Update all cards with new indices
+        finalCards = remainingCards.map(card => {
+          if (card.isDuplicate && indexMap.has(card.id)) {
+            return { ...card, duplicationIndex: indexMap.get(card.id) };
+          }
+          return card;
+        });
+      }
+
+      updateCurrentState({
+        additionalCards: finalCards,
+        totalRemovals: currentState.totalRemovals - removalsDecrement,
+        removalsBonusCount: currentState.removalsBonusCount - removalsBonusDecrement,
+        totalConversions: currentState.totalConversions - conversionsDecrement,
+        totalDuplications: currentState.totalDuplications - duplicationsDecrement,
+      });
+    }
+  };
+
   // Get a specific card by ID
   const getCard = (cardId) => {
     return [...currentState.baseCards, ...currentState.additionalCards].find(c => c.id === cardId);
@@ -334,6 +418,7 @@ export const DeckProvider = ({ children }) => {
     addEpiphany,
     convertCard,
     duplicateCard,
+    deleteOrResetCard,
     getCard,
     resetRun,
     selectCharacter,

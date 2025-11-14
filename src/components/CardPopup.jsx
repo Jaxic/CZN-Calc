@@ -2,7 +2,7 @@ import React from 'react';
 import { useDeck } from '../context/DeckContext';
 
 const CardPopup = ({ cardId, onClose }) => {
-  const { getCard, addEpiphany, convertCard, duplicateCard, removeCard } = useDeck();
+  const { getCard, addEpiphany, convertCard, duplicateCard, removeCard, deleteOrResetCard } = useDeck();
   const card = getCard(cardId);
 
   if (!card) {
@@ -28,6 +28,20 @@ const CardPopup = ({ cardId, onClose }) => {
   const handleRemove = () => {
     removeCard(cardId);
     onClose();
+  };
+
+  const handleDeleteOrReset = () => {
+    // Determine if this is a base card (and not a duplicate of a base card)
+    const isOriginalBaseCard = card.type === 'base' && !card.isDuplicate;
+    const actionText = isOriginalBaseCard ? 'reset' : 'delete';
+    const message = isOriginalBaseCard
+      ? 'Are you sure you want to reset this card? This will remove all modifications (epiphanies, conversions, removals) but keep the card name and lock state.'
+      : 'Are you sure you want to delete this card? This action cannot be undone (except via Undo button).';
+
+    if (window.confirm(message)) {
+      deleteOrResetCard(cardId);
+      onClose();
+    }
   };
 
   // Calculate duplication cost based on index
@@ -125,7 +139,7 @@ const CardPopup = ({ cardId, onClose }) => {
               >
                 <div className="font-semibold text-blue-700 dark:text-blue-300">Add Regular Epiphany</div>
                 <div className="text-sm text-gray-600 dark:text-gray-300">
-                  {card.type === 'base' ? 'FREE (0 points on base cards)' : '+10 points to this card'}
+                  {card.type === 'base' ? 'FREE (0 points on base cards, including duplicates)' : '+10 points to this card'}
                 </div>
               </button>
 
@@ -192,6 +206,21 @@ const CardPopup = ({ cardId, onClose }) => {
               </div>
             </button>
           )}
+
+          {/* Delete/Reset button - always show */}
+          <button
+            onClick={handleDeleteOrReset}
+            className="w-full py-3 px-4 rounded-lg text-left border-2 border-orange-300 dark:border-orange-600 bg-orange-50 dark:bg-orange-900 dark:bg-opacity-30 hover:bg-orange-100 dark:hover:bg-orange-800 dark:hover:bg-opacity-40 transition-colors"
+          >
+            <div className="font-semibold text-orange-700 dark:text-orange-300">
+              {card.type === 'base' && !card.isDuplicate ? '🔄 Reset Card' : '🗑️ Delete Card'}
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-300">
+              {card.type === 'base' && !card.isDuplicate
+                ? 'Remove all modifications but keep card name'
+                : 'Permanently remove this card from deck'}
+            </div>
+          </button>
 
           {card.isRemoved && (
             <div className="w-full py-3 px-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700">
