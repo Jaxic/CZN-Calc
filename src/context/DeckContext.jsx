@@ -59,11 +59,24 @@ export const DeckProvider = ({ children }) => {
     3: createInitialDeckState(),
   });
 
+  // History for undo functionality (per team member)
+  const [history, setHistory] = useState({
+    1: [],
+    2: [],
+    3: [],
+  });
+
   // Get current active team member's state
   const currentState = teamMembers[activeTeamMember];
 
   // Helper to update current team member's state
   const updateCurrentState = (updates) => {
+    // Save current state to history before updating (limit to last 20 states)
+    setHistory(prev => ({
+      ...prev,
+      [activeTeamMember]: [...prev[activeTeamMember], currentState].slice(-20),
+    }));
+
     setTeamMembers(prev => ({
       ...prev,
       [activeTeamMember]: {
@@ -72,6 +85,30 @@ export const DeckProvider = ({ children }) => {
       },
     }));
   };
+
+  // Undo last action
+  const undo = () => {
+    const memberHistory = history[activeTeamMember];
+    if (memberHistory.length === 0) return; // Nothing to undo
+
+    // Get the last state from history
+    const previousState = memberHistory[memberHistory.length - 1];
+
+    // Remove last state from history
+    setHistory(prev => ({
+      ...prev,
+      [activeTeamMember]: prev[activeTeamMember].slice(0, -1),
+    }));
+
+    // Restore previous state
+    setTeamMembers(prev => ({
+      ...prev,
+      [activeTeamMember]: previousState,
+    }));
+  };
+
+  // Check if undo is available
+  const canUndo = history[activeTeamMember].length > 0;
 
   // Calculate current deck state
   const deckState = {
@@ -244,15 +281,25 @@ export const DeckProvider = ({ children }) => {
       ...character.uniqueCards.slice(1).map(cardName => createCard('base', true, cardName)),
     ];
 
-    updateCurrentState({
-      baseCards: characterBaseCards,
-      selectedCharacter: characterName,
-      additionalCards: [],
-      totalRemovals: 0,
-      removalsBonusCount: 0,
-      totalDuplications: 0,
-      totalConversions: 0,
-    });
+    // Clear history when selecting a new character (it's essentially a reset)
+    setHistory(prev => ({
+      ...prev,
+      [activeTeamMember]: [],
+    }));
+
+    setTeamMembers(prev => ({
+      ...prev,
+      [activeTeamMember]: {
+        tier: 8,
+        baseCards: characterBaseCards,
+        additionalCards: [],
+        selectedCharacter: characterName,
+        totalRemovals: 0,
+        removalsBonusCount: 0,
+        totalDuplications: 0,
+        totalConversions: 0,
+      },
+    }));
   };
 
   const value = {
@@ -274,6 +321,10 @@ export const DeckProvider = ({ children }) => {
     currentPoints,
     cap,
     deckState,
+
+    // Undo functionality
+    undo,
+    canUndo,
 
     // Actions
     unlockBaseCard,
