@@ -141,8 +141,10 @@ export function calculateConversionPoints(totalConversions) {
  */
 export function calculateTotalPoints(deckState) {
   // Sum all active cards (both base and additional)
+  // IMPORTANT: Exclude duplicate cards here as they're counted in duplicationPoints
   const allCards = [...deckState.baseCards, ...deckState.additionalCards];
   const cardPoints = allCards
+    .filter(card => !card.isDuplicate)  // Exclude duplicates to avoid double-counting
     .map(card => calculateCardPoints(card))
     .reduce((sum, points) => sum + points, 0);
 
