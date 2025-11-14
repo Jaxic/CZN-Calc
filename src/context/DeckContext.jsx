@@ -29,51 +29,99 @@ const createCard = (type = 'base', isLocked = false, cardName = null) => ({
   originalCardId: null,
 });
 
-export const DeckProvider = ({ children }) => {
-  // Initialize with 8 base cards (4 active, 4 locked)
+// Helper to create initial deck state for a team member
+const createInitialDeckState = () => {
   const initialBaseCards = [
     ...Array(4).fill(null).map(() => createCard('base', false)),
     ...Array(4).fill(null).map(() => createCard('base', true)),
   ];
 
-  const [tier, setTier] = useState(8); // Default: Tier 8
-  const [baseCards, setBaseCards] = useState(initialBaseCards);
-  const [additionalCards, setAdditionalCards] = useState([]);
-  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  return {
+    tier: 8,
+    baseCards: initialBaseCards,
+    additionalCards: [],
+    selectedCharacter: null,
+    totalRemovals: 0,
+    removalsBonusCount: 0,
+    totalDuplications: 0,
+    totalConversions: 0,
+  };
+};
 
-  // Global counters
-  const [totalRemovals, setTotalRemovals] = useState(0);
-  const [removalsBonusCount, setRemovalsBonusCount] = useState(0);
-  const [totalDuplications, setTotalDuplications] = useState(0);
-  const [totalConversions, setTotalConversions] = useState(0);
+export const DeckProvider = ({ children }) => {
+  // Active team member (1, 2, or 3)
+  const [activeTeamMember, setActiveTeamMember] = useState(1);
+
+  // State for all 3 team members
+  const [teamMembers, setTeamMembers] = useState({
+    1: createInitialDeckState(),
+    2: createInitialDeckState(),
+    3: createInitialDeckState(),
+  });
+
+  // Get current active team member's state
+  const currentState = teamMembers[activeTeamMember];
+
+  // Helper to update current team member's state
+  const updateCurrentState = (updates) => {
+    setTeamMembers(prev => ({
+      ...prev,
+      [activeTeamMember]: {
+        ...prev[activeTeamMember],
+        ...updates,
+      },
+    }));
+  };
 
   // Calculate current deck state
   const deckState = {
-    tier,
-    baseCards,
-    additionalCards,
-    totalRemovals,
-    removalsBonusCount,
-    totalDuplications,
-    totalConversions,
+    tier: currentState.tier,
+    baseCards: currentState.baseCards,
+    additionalCards: currentState.additionalCards,
+    totalRemovals: currentState.totalRemovals,
+    removalsBonusCount: currentState.removalsBonusCount,
+    totalDuplications: currentState.totalDuplications,
+    totalConversions: currentState.totalConversions,
   };
 
   const currentPoints = calculateTotalPoints(deckState);
-  const cap = TIER_CAPS[tier];
+  const cap = TIER_CAPS[currentState.tier];
+
+  // Switch to a different team member
+  const switchTeamMember = (memberNumber) => {
+    if (memberNumber >= 1 && memberNumber <= 3) {
+      setActiveTeamMember(memberNumber);
+    }
+  };
+
+  // Get character name for a specific team member
+  const getTeamMemberCharacter = (memberNumber) => {
+    const state = teamMembers[memberNumber];
+    if (!state || !state.selectedCharacter) return null;
+    const character = CHARACTERS[state.selectedCharacter];
+    return character ? character.displayName : null;
+  };
+
+  // Set tier
+  const setTier = (newTier) => {
+    updateCurrentState({ tier: newTier });
+  };
 
   // Unlock a base card (remove locked state)
   const unlockBaseCard = (cardId) => {
-    setBaseCards(prevCards =>
-      prevCards.map(card =>
+    updateCurrentState({
+      baseCards: currentState.baseCards.map(card =>
         card.id === cardId ? { ...card, isLocked: false } : card
-      )
-    );
+      ),
+    });
   };
 
   // Add a new additional card
   const addAdditionalCard = (type) => {
     const newCard = createCard(type, false);
-    setAdditionalCards(prev => [...prev, newCard]);
+    updateCurrentState({
+      additionalCards: [...currentState.additionalCards, newCard],
+    });
     return newCard.id;
   };
 
@@ -82,33 +130,34 @@ export const DeckProvider = ({ children }) => {
     let cardToRemove = null;
 
     // Find card in base cards
-    const baseCard = baseCards.find(c => c.id === cardId);
+    const baseCard = currentState.baseCards.find(c => c.id === cardId);
     if (baseCard) {
       cardToRemove = baseCard;
-      setBaseCards(prevCards =>
-        prevCards.map(card =>
+      updateCurrentState({
+        baseCards: currentState.baseCards.map(card =>
           card.id === cardId ? { ...card, isRemoved: true } : card
-        )
-      );
+        ),
+        totalRemovals: currentState.totalRemovals + 1,
+        removalsBonusCount: cardToRemove.type === 'base'
+          ? currentState.removalsBonusCount + 1
+          : currentState.removalsBonusCount,
+      });
+      return;
     }
 
     // Find card in additional cards
-    const additionalCard = additionalCards.find(c => c.id === cardId);
+    const additionalCard = currentState.additionalCards.find(c => c.id === cardId);
     if (additionalCard) {
       cardToRemove = additionalCard;
-      setAdditionalCards(prevCards =>
-        prevCards.map(card =>
+      updateCurrentState({
+        additionalCards: currentState.additionalCards.map(card =>
           card.id === cardId ? { ...card, isRemoved: true } : card
-        )
-      );
-    }
-
-    // Update counters
-    setTotalRemovals(prev => prev + 1);
-
-    // Check if starting card penalty applies (only for the 8 base cards)
-    if (cardToRemove && cardToRemove.type === 'base') {
-      setRemovalsBonusCount(prev => prev + 1);
+        ),
+        totalRemovals: currentState.totalRemovals + 1,
+        removalsBonusCount: cardToRemove.type === 'base'
+          ? currentState.removalsBonusCount + 1
+          : currentState.removalsBonusCount,
+      });
     }
   };
 
@@ -121,8 +170,10 @@ export const DeckProvider = ({ children }) => {
       return card;
     };
 
-    setBaseCards(prevCards => prevCards.map(updateCard));
-    setAdditionalCards(prevCards => prevCards.map(updateCard));
+    updateCurrentState({
+      baseCards: currentState.baseCards.map(updateCard),
+      additionalCards: currentState.additionalCards.map(updateCard),
+    });
   };
 
   // Convert a card to neutral
@@ -134,19 +185,20 @@ export const DeckProvider = ({ children }) => {
       return card;
     };
 
-    setBaseCards(prevCards => prevCards.map(updateCard));
-    setAdditionalCards(prevCards => prevCards.map(updateCard));
+    // Check if card needs conversion counter increment
+    const card = [...currentState.baseCards, ...currentState.additionalCards].find(c => c.id === cardId);
+    const shouldIncrement = card && !card.isConverted;
 
-    // Increment conversion counter (only once per card)
-    const card = [...baseCards, ...additionalCards].find(c => c.id === cardId);
-    if (card && !card.isConverted) {
-      setTotalConversions(prev => prev + 1);
-    }
+    updateCurrentState({
+      baseCards: currentState.baseCards.map(updateCard),
+      additionalCards: currentState.additionalCards.map(updateCard),
+      totalConversions: shouldIncrement ? currentState.totalConversions + 1 : currentState.totalConversions,
+    });
   };
 
   // Duplicate a card (creates copy in additional cards)
   const duplicateCard = (cardId) => {
-    const sourceCard = [...baseCards, ...additionalCards].find(c => c.id === cardId);
+    const sourceCard = [...currentState.baseCards, ...currentState.additionalCards].find(c => c.id === cardId);
 
     if (sourceCard) {
       const duplicateCard = {
@@ -155,11 +207,13 @@ export const DeckProvider = ({ children }) => {
         isConverted: sourceCard.isConverted,
         isDuplicate: true,
         originalCardId: cardId,
-        duplicationIndex: totalDuplications, // Track which copy this is (0, 1, 2, etc.)
+        duplicationIndex: currentState.totalDuplications,
       };
 
-      setAdditionalCards(prev => [...prev, duplicateCard]);
-      setTotalDuplications(prev => prev + 1);
+      updateCurrentState({
+        additionalCards: [...currentState.additionalCards, duplicateCard],
+        totalDuplications: currentState.totalDuplications + 1,
+      });
 
       return duplicateCard.id;
     }
@@ -167,25 +221,12 @@ export const DeckProvider = ({ children }) => {
 
   // Get a specific card by ID
   const getCard = (cardId) => {
-    return [...baseCards, ...additionalCards].find(c => c.id === cardId);
+    return [...currentState.baseCards, ...currentState.additionalCards].find(c => c.id === cardId);
   };
 
-  // Reset the entire run
+  // Reset the current team member's run
   const resetRun = () => {
-    // Reset to 8 base cards (4 active, 4 locked)
-    const resetBaseCards = [
-      ...Array(4).fill(null).map(() => createCard('base', false)),
-      ...Array(4).fill(null).map(() => createCard('base', true)),
-    ];
-
-    setTier(8); // Reset to Tier 8
-    setBaseCards(resetBaseCards);
-    setAdditionalCards([]);
-    setTotalRemovals(0);
-    setRemovalsBonusCount(0);
-    setTotalDuplications(0);
-    setTotalConversions(0);
-    setSelectedCharacter(null);
+    updateCurrentState(createInitialDeckState());
   };
 
   // Select a character and populate base cards with their cards
@@ -193,9 +234,7 @@ export const DeckProvider = ({ children }) => {
     const character = CHARACTERS[characterName];
     if (!character) return;
 
-    // Create 8 base cards from character data:
-    // - 3 starting cards + 1st unique card (active)
-    // - Remaining 4 unique cards (locked)
+    // Create 8 base cards from character data
     const characterBaseCards = [
       // 3 starting cards (active)
       ...character.startingCards.map(cardName => createCard('base', false, cardName)),
@@ -205,28 +244,33 @@ export const DeckProvider = ({ children }) => {
       ...character.uniqueCards.slice(1).map(cardName => createCard('base', true, cardName)),
     ];
 
-    setBaseCards(characterBaseCards);
-    setSelectedCharacter(characterName);
-
-    // Reset other state
-    setAdditionalCards([]);
-    setTotalRemovals(0);
-    setRemovalsBonusCount(0);
-    setTotalDuplications(0);
-    setTotalConversions(0);
+    updateCurrentState({
+      baseCards: characterBaseCards,
+      selectedCharacter: characterName,
+      additionalCards: [],
+      totalRemovals: 0,
+      removalsBonusCount: 0,
+      totalDuplications: 0,
+      totalConversions: 0,
+    });
   };
 
   const value = {
-    // State
-    tier,
+    // Team member state
+    activeTeamMember,
+    switchTeamMember,
+    getTeamMemberCharacter,
+
+    // Current state
+    tier: currentState.tier,
     setTier,
-    baseCards,
-    additionalCards,
-    selectedCharacter,
-    totalRemovals,
-    removalsBonusCount,
-    totalDuplications,
-    totalConversions,
+    baseCards: currentState.baseCards,
+    additionalCards: currentState.additionalCards,
+    selectedCharacter: currentState.selectedCharacter,
+    totalRemovals: currentState.totalRemovals,
+    removalsBonusCount: currentState.removalsBonusCount,
+    totalDuplications: currentState.totalDuplications,
+    totalConversions: currentState.totalConversions,
     currentPoints,
     cap,
     deckState,

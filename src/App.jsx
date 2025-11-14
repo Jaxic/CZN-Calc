@@ -2,6 +2,7 @@ import React from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { DeckProvider } from './context/DeckContext';
 import { ThemeProvider } from './context/ThemeContext';
+import TeamTabs from './components/TeamTabs';
 import CharacterSelector from './components/CharacterSelector';
 import TierSelector from './components/TierSelector';
 import StatusBar from './components/StatusBar';
@@ -37,6 +38,11 @@ function App() {
 
           {/* Main Content */}
           <main className="container mx-auto px-4 py-6">
+            {/* Team Tabs */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 mb-6 transition-colors">
+              <TeamTabs />
+            </div>
+
             {/* Character, Tier Selector & Status Bar */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 mb-6 transition-colors">
               <div className="space-y-4">
