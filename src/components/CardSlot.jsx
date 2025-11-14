@@ -96,8 +96,7 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
     >
       {card.isLocked ? (
         <>
-          <div className="text-3xl mb-1">🔒</div>
-          <div className="text-xs font-semibold text-gray-600 dark:text-gray-400">LOCKED</div>
+          <div className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">LOCKED</div>
           {card.cardName && (
             <div className="text-sm font-bold text-gray-900 dark:text-gray-900 mt-2 px-2 py-1 text-center line-clamp-2 bg-white bg-opacity-80 rounded">
               {card.cardName}
@@ -128,20 +127,20 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
           {/* Epiphany indicator */}
           {card.epiphanyType !== 'none' && (
             <div className="text-xs font-semibold mt-1 dark:text-gray-200">
-              {card.epiphanyType === 'regular' && '✨ Epiphany'}
-              {card.epiphanyType === 'divine' && '🌟 Divine'}
+              {card.epiphanyType === 'regular' && 'Epiphany'}
+              {card.epiphanyType === 'divine' && 'Divine'}
             </div>
           )}
 
           {/* Conversion indicator */}
           {card.isConverted && (
-            <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">🔄 Converted</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Converted</div>
           )}
 
           {/* Removed overlay */}
           {card.isRemoved && (
             <div className="text-xs font-bold text-red-600 dark:text-red-400 mt-1">
-              🗑️ REMOVED
+              REMOVED
             </div>
           )}
         </>

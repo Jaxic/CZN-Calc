@@ -172,28 +172,28 @@ export function getStatus(current, cap) {
       type: 'danger',
       message: 'OVER LIMIT - Cards Will Be Lost',
       color: 'red',
-      icon: '❌'
+      icon: ''
     };
   } else if (percentage === 100) {
     return {
       type: 'success',
       message: 'PERFECT - Exactly at Cap',
       color: 'green',
-      icon: '🎯'
+      icon: ''
     };
   } else if (percentage >= 90) {
     return {
       type: 'warning',
       message: 'WARNING - Close to Limit',
       color: 'yellow',
-      icon: '⚠️'
+      icon: ''
     };
   } else {
     return {
       type: 'success',
       message: 'SAFE',
       color: 'green',
-      icon: '✅'
+      icon: ''
     };
   }
 }

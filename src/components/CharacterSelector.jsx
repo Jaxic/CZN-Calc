@@ -57,7 +57,6 @@ const CharacterSelector = () => {
           rel="noopener noreferrer"
           className="ml-auto px-6 py-2 bg-orange-500 hover:bg-orange-600 dark:bg-orange-600 dark:hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors shadow-md flex items-center gap-2"
         >
-          <span>☕</span>
           <span>Buy Me a Coffee</span>
         </a>
       </div>

@@ -58,11 +58,11 @@ const BreakdownPanel = () => {
         {/* Epiphanies */}
         <div className="space-y-1">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700 dark:text-gray-300">✨ Epiphanies: {breakdown.regularEpiphanies.count}</span>
+            <span className="text-gray-700 dark:text-gray-300">Epiphanies: {breakdown.regularEpiphanies.count}</span>
             <span className="font-semibold text-blue-600 dark:text-blue-400">{breakdown.regularEpiphanies.points} pts</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700 dark:text-gray-300">🌟 Divine Epiphanies: {breakdown.divineEpiphanies.count}</span>
+            <span className="text-gray-700 dark:text-gray-300">Divine Epiphanies: {breakdown.divineEpiphanies.count}</span>
             <span className="font-semibold text-purple-600 dark:text-purple-400">{breakdown.divineEpiphanies.points} pts</span>
           </div>
         </div>
@@ -73,7 +73,7 @@ const BreakdownPanel = () => {
         <div className="space-y-1">
           <div className="flex justify-between text-sm">
             <span className="text-gray-700 dark:text-gray-300">
-              🗑️ Removals: {breakdown.removals.count}
+              Removals: {breakdown.removals.count}
               {breakdown.removals.bonusCount > 0 && (
                 <span className="text-xs"> (+{breakdown.removals.bonusCount} bonus)</span>
               )}
@@ -81,11 +81,11 @@ const BreakdownPanel = () => {
             <span className="font-semibold text-red-600 dark:text-red-400">{breakdown.removals.points} pts</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700 dark:text-gray-300">📋 Duplications: {breakdown.duplications.count}</span>
+            <span className="text-gray-700 dark:text-gray-300">Duplications: {breakdown.duplications.count}</span>
             <span className="font-semibold text-indigo-600 dark:text-indigo-400">{breakdown.duplications.points} pts</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700 dark:text-gray-300">🔄 Conversions: {breakdown.conversions.count}</span>
+            <span className="text-gray-700 dark:text-gray-300">Conversions: {breakdown.conversions.count}</span>
             <span className="font-semibold text-green-600 dark:text-green-400">{breakdown.conversions.points} pts</span>
           </div>
         </div>
