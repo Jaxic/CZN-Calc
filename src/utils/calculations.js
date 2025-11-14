@@ -104,11 +104,13 @@ export function calculateRemovalPoints(totalRemovals, bonusCount) {
  */
 export function calculateDuplicationPoints(duplicatedCards) {
   // Progressive base costs: 1st=0, 2nd=10, 3rd=30, 4th=50, 5th+=70
+  // NOTE: This function ONLY returns the progressive duplication costs
+  // The card values themselves are counted in their respective categories (epiphanies, card types, etc.)
   const dupCosts = [0, 10, 30, 50];
   let total = 0;
 
   duplicatedCards.forEach((card, index) => {
-    // Add base duplication cost
+    // Add ONLY the progressive duplication cost (not the card value)
     if (index === 0) {
       total += 0; // First duplication is free
     } else if (index <= 3) {
@@ -116,9 +118,6 @@ export function calculateDuplicationPoints(duplicatedCards) {
     } else {
       total += 70; // 5th+ cost 70 each
     }
-
-    // Add the card's full value
-    total += calculateCardPoints(card);
   });
 
   return total;
@@ -140,11 +139,10 @@ export function calculateConversionPoints(totalConversions) {
  * @returns {number} Total point value
  */
 export function calculateTotalPoints(deckState) {
-  // Sum all active cards (both base and additional)
-  // IMPORTANT: Exclude duplicate cards here as they're counted in duplicationPoints
+  // Sum all active cards (both base and additional, including duplicates)
+  // Duplicates are included here because duplicationPoints only contains progressive costs
   const allCards = [...deckState.baseCards, ...deckState.additionalCards];
   const cardPoints = allCards
-    .filter(card => !card.isDuplicate)  // Exclude duplicates to avoid double-counting
     .map(card => calculateCardPoints(card))
     .reduce((sum, points) => sum + points, 0);
 
@@ -214,7 +212,8 @@ export function getStatus(current, cap) {
 export function getPointsBreakdown(deckState) {
   const allCards = [...deckState.baseCards, ...deckState.additionalCards];
 
-  // Count cards by type (excluding removed cards)
+  // Count cards by type (excluding removed cards, including duplicates)
+  // Duplicates are included because Duplications section only shows progressive costs
   const activeCards = allCards.filter(card => !card.isRemoved);
 
   const baseCardsCount = activeCards.filter(c => c.type === 'base').length;
@@ -222,7 +221,7 @@ export function getPointsBreakdown(deckState) {
   const monsterCardsCount = activeCards.filter(c => c.type === 'monster').length;
   const forbiddenCardsCount = activeCards.filter(c => c.type === 'forbidden').length;
 
-  // Count epiphanies
+  // Count epiphanies (including duplicates)
   const regularEpiphanies = activeCards.filter(c => c.epiphanyType === 'regular').length;
   const divineEpiphanies = activeCards.filter(c => c.epiphanyType === 'divine').length;
 
