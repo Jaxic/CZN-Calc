@@ -3,7 +3,7 @@ import { useDeck } from '../context/DeckContext';
 import { getCharacterList } from '../data/characters';
 
 const CharacterSelector = () => {
-  const { selectedCharacter, selectCharacter } = useDeck();
+  const { selectedCharacter, selectCharacter, undo, canUndo } = useDeck();
   const characters = getCharacterList();
 
   const handleCharacterChange = (e) => {
@@ -13,12 +13,18 @@ const CharacterSelector = () => {
     }
   };
 
+  const handleUndo = () => {
+    if (canUndo) {
+      undo();
+    }
+  };
+
   return (
     <div className="space-y-2">
       <label htmlFor="character-select" className="block text-sm font-semibold text-gray-700 dark:text-gray-200">
         Select Character
       </label>
-      <div className="flex items-center">
+      <div className="flex items-center gap-3">
         <select
           id="character-select"
           value={selectedCharacter || ''}
@@ -32,6 +38,19 @@ const CharacterSelector = () => {
             </option>
           ))}
         </select>
+        <button
+          onClick={handleUndo}
+          disabled={!canUndo}
+          className={`px-4 py-2 rounded-lg font-semibold transition-colors shadow-md flex items-center gap-2 ${
+            canUndo
+              ? 'bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white cursor-pointer'
+              : 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-500 cursor-not-allowed'
+          }`}
+          title={canUndo ? 'Undo last action' : 'No actions to undo'}
+        >
+          <span className="text-lg">↶</span>
+          <span className="hidden sm:inline">Undo</span>
+        </button>
         <a
           href="https://buymeacoffee.com/jaxic"
           target="_blank"
