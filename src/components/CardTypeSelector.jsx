@@ -55,7 +55,7 @@ const CardTypeSelector = ({ onClose }) => {
       type: 'forbidden',
       label: 'Forbidden Card',
       points: 20,
-      description: 'Auto-saved (doesn\'t count toward limit)',
+      description: 'Card retained even if over limit',
       color: 'red',
     },
   ];
