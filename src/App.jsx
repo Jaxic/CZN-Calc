@@ -55,7 +55,7 @@ function App() {
             {/* Bug Report Banner */}
             <div className="bg-red-600 dark:bg-red-700 rounded-lg shadow-md p-4 md:p-6 mb-6">
               <p className="text-black font-semibold text-center text-sm md:text-base">
-                IN--GAME BUG REPORT-- Neutral cards (+20) count both the proc of regular epiphany (+10) and the cost of the divine (+20) when selected for a total cost of +50 in your Memory cap
+                --BUG REPORT-- Neutral cards (+20) count both the proc of regular epiphany (+10) and the cost of the divine (+20) when selected for a total cost of +50 in your Memory cap
               </p>
             </div>
 
