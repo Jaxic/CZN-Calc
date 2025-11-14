@@ -37,7 +37,6 @@ const createInitialDeckState = () => {
   ];
 
   return {
-    tier: 8,
     baseCards: initialBaseCards,
     additionalCards: [],
     selectedCharacter: null,
@@ -51,6 +50,9 @@ const createInitialDeckState = () => {
 export const DeckProvider = ({ children }) => {
   // Active team member (1, 2, or 3)
   const [activeTeamMember, setActiveTeamMember] = useState(1);
+
+  // Global tier setting (applies to all team members)
+  const [tier, setTier] = useState(8);
 
   // State for all 3 team members
   const [teamMembers, setTeamMembers] = useState({
@@ -112,7 +114,7 @@ export const DeckProvider = ({ children }) => {
 
   // Calculate current deck state
   const deckState = {
-    tier: currentState.tier,
+    tier: tier,
     baseCards: currentState.baseCards,
     additionalCards: currentState.additionalCards,
     totalRemovals: currentState.totalRemovals,
@@ -122,7 +124,7 @@ export const DeckProvider = ({ children }) => {
   };
 
   const currentPoints = calculateTotalPoints(deckState);
-  const cap = TIER_CAPS[currentState.tier];
+  const cap = TIER_CAPS[tier];
 
   // Switch to a different team member
   const switchTeamMember = (memberNumber) => {
@@ -137,11 +139,6 @@ export const DeckProvider = ({ children }) => {
     if (!state || !state.selectedCharacter) return null;
     const character = CHARACTERS[state.selectedCharacter];
     return character ? character.displayName : null;
-  };
-
-  // Set tier
-  const setTier = (newTier) => {
-    updateCurrentState({ tier: newTier });
   };
 
   // Unlock a base card (remove locked state)
@@ -376,7 +373,6 @@ export const DeckProvider = ({ children }) => {
     setTeamMembers(prev => ({
       ...prev,
       [activeTeamMember]: {
-        tier: 8,
         baseCards: characterBaseCards,
         additionalCards: [],
         selectedCharacter: characterName,
@@ -394,9 +390,11 @@ export const DeckProvider = ({ children }) => {
     switchTeamMember,
     getTeamMemberCharacter,
 
-    // Current state
-    tier: currentState.tier,
+    // Global state (shared across all team members)
+    tier,
     setTier,
+
+    // Current team member state
     baseCards: currentState.baseCards,
     additionalCards: currentState.additionalCards,
     selectedCharacter: currentState.selectedCharacter,
