@@ -198,10 +198,11 @@ export const DeckProvider = ({ children }) => {
     }
   };
 
-  // Add epiphany to a card
+  // Add or change epiphany on a card
   const addEpiphany = (cardId, epiphanyType) => {
     const updateCard = (card) => {
-      if (card.id === cardId && card.epiphanyType === 'none') {
+      if (card.id === cardId) {
+        // Allow switching between epiphany types or adding new ones
         return { ...card, epiphanyType };
       }
       return card;
