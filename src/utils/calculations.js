@@ -48,15 +48,12 @@ export function calculateCardPoints(card) {
   }
 
   // Add epiphany modifiers (only ONE per card)
-  // Special rule: Regular epiphanies on ORIGINAL base cards are FREE
-  // Duplicates always cost 10 points for regular epiphanies
+  // Special rule: Regular epiphanies on base cards are FREE (even duplicates)
   if (card.epiphanyType === 'regular') {
-    if (card.isDuplicate) {
-      points += 10; // Duplicates always cost 10
-    } else if (card.type !== 'base') {
-      points += 10; // Non-base original cards cost 10
+    if (card.type !== 'base') {
+      points += 10;
     }
-    // else: free for original base cards only
+    // else: free for base cards (including duplicates)
   } else if (card.epiphanyType === 'divine') {
     points += 20; // Divine always costs 20 regardless of card type
 
@@ -228,11 +225,10 @@ export function getPointsBreakdown(deckState) {
   const regularEpiphanies = activeCards.filter(c => c.epiphanyType === 'regular').length;
   const divineEpiphanies = activeCards.filter(c => c.epiphanyType === 'divine').length;
 
-  // Count regular epiphanies that cost points
-  // Free: ORIGINAL base cards only
-  // Cost 10: Duplicates (even of base cards) OR non-base original cards
+  // Count regular epiphanies that cost points (NOT on base cards - those are free)
+  // Base cards (including duplicates) get free regular epiphanies
   const regularEpiphaniesOnNonBase = activeCards.filter(c =>
-    c.epiphanyType === 'regular' && (c.isDuplicate || c.type !== 'base')
+    c.epiphanyType === 'regular' && c.type !== 'base'
   ).length;
 
   // Count neutral cards with divine epiphanies (for in-game bug calculation)
