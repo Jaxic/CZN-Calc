@@ -48,12 +48,15 @@ export function calculateCardPoints(card) {
   }
 
   // Add epiphany modifiers (only ONE per card)
-  // Special rule: Regular epiphanies on base cards are FREE
+  // Special rule: Regular epiphanies on ORIGINAL base cards are FREE
+  // Duplicates always cost 10 points for regular epiphanies
   if (card.epiphanyType === 'regular') {
-    if (card.type !== 'base') {
-      points += 10;
+    if (card.isDuplicate) {
+      points += 10; // Duplicates always cost 10
+    } else if (card.type !== 'base') {
+      points += 10; // Non-base original cards cost 10
     }
-    // else: free for base cards
+    // else: free for original base cards only
   } else if (card.epiphanyType === 'divine') {
     points += 20; // Divine always costs 20 regardless of card type
 
