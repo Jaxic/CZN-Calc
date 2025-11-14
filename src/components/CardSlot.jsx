@@ -1,6 +1,22 @@
 import React from 'react';
+import { useDeck } from '../context/DeckContext';
 
 const CardSlot = ({ card, onClick, isAddButton = false }) => {
+  const { deleteOrResetCard } = useDeck();
+
+  const handleDeleteOrReset = (e) => {
+    e.stopPropagation(); // Prevent card click from firing
+
+    const isOriginalBaseCard = card.type === 'base' && !card.isDuplicate;
+    const message = isOriginalBaseCard
+      ? 'Are you sure you want to reset this card? This will remove all modifications (epiphanies, conversions, removals) but keep the card name and lock state.'
+      : 'Are you sure you want to delete this card? This action cannot be undone (except via Undo button).';
+
+    if (window.confirm(message)) {
+      deleteOrResetCard(card.id);
+    }
+  };
+
   if (isAddButton) {
     return (
       <button
@@ -91,9 +107,20 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
   return (
     <button
       onClick={onClick}
-      className={getCardClasses()}
+      className={`${getCardClasses()} relative`}
       disabled={card.isRemoved}
     >
+      {/* Delete/Reset icon - top right corner */}
+      {!card.isLocked && (
+        <button
+          onClick={handleDeleteOrReset}
+          className="absolute top-1 right-1 w-5 h-5 flex items-center justify-center rounded-full bg-red-500 dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700 text-white font-bold text-xs shadow-md transition-colors z-10"
+          title={card.type === 'base' && !card.isDuplicate ? 'Reset card' : 'Delete card'}
+        >
+          ✕
+        </button>
+      )}
+
       {card.isLocked ? (
         <>
           <div className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">LOCKED</div>

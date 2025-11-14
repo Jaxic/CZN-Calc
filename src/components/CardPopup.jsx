@@ -2,7 +2,7 @@ import React from 'react';
 import { useDeck } from '../context/DeckContext';
 
 const CardPopup = ({ cardId, onClose }) => {
-  const { getCard, addEpiphany, convertCard, duplicateCard, removeCard } = useDeck();
+  const { getCard, addEpiphany, convertCard, duplicateCard, removeCard, deleteOrResetCard } = useDeck();
   const card = getCard(cardId);
 
   if (!card) {
@@ -28,6 +28,20 @@ const CardPopup = ({ cardId, onClose }) => {
   const handleRemove = () => {
     removeCard(cardId);
     onClose();
+  };
+
+  const handleDeleteOrReset = () => {
+    // Determine if this is a base card (and not a duplicate of a base card)
+    const isOriginalBaseCard = card.type === 'base' && !card.isDuplicate;
+    const actionText = isOriginalBaseCard ? 'reset' : 'delete';
+    const message = isOriginalBaseCard
+      ? 'Are you sure you want to reset this card? This will remove all modifications (epiphanies, conversions, removals) but keep the card name and lock state.'
+      : 'Are you sure you want to delete this card? This action cannot be undone (except via Undo button).';
+
+    if (window.confirm(message)) {
+      deleteOrResetCard(cardId);
+      onClose();
+    }
   };
 
   // Calculate duplication cost based on index
@@ -74,7 +88,6 @@ const CardPopup = ({ cardId, onClose }) => {
   };
 
   // Check if actions are available
-  const canAddEpiphany = card.epiphanyType === 'none' && !card.isRemoved;
   const canConvert = !card.isConverted && card.type !== 'neutral' && !card.isRemoved;
   const canDuplicate = !card.isRemoved;
   const canRemove = !card.isRemoved;
@@ -117,37 +130,48 @@ const CardPopup = ({ cardId, onClose }) => {
 
         {/* Action buttons */}
         <div className="space-y-2">
-          {canAddEpiphany && (
+          {/* Epiphany options - show all available options unless removed */}
+          {!card.isRemoved && (
             <>
-              <button
-                onClick={() => handleAddEpiphany('regular')}
-                className="w-full py-3 px-4 rounded-lg text-left border-2 border-blue-300 dark:border-blue-600 bg-blue-50 dark:bg-blue-900 dark:bg-opacity-30 hover:bg-blue-100 dark:hover:bg-blue-800 dark:hover:bg-opacity-40 transition-colors"
-              >
-                <div className="font-semibold text-blue-700 dark:text-blue-300">Add Regular Epiphany</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">
-                  {card.type === 'base' ? 'FREE (0 points on base cards)' : '+10 points to this card'}
-                </div>
-              </button>
+              {/* Regular Epiphany */}
+              {card.epiphanyType !== 'regular' && (
+                <button
+                  onClick={() => handleAddEpiphany('regular')}
+                  className="w-full py-3 px-4 rounded-lg text-left border-2 border-blue-300 dark:border-blue-600 bg-blue-50 dark:bg-blue-900 dark:bg-opacity-30 hover:bg-blue-100 dark:hover:bg-blue-800 dark:hover:bg-opacity-40 transition-colors"
+                >
+                  <div className="font-semibold text-blue-700 dark:text-blue-300">
+                    {card.epiphanyType === 'none' ? 'Add Regular Epiphany' : 'Switch to Regular Epiphany'}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">
+                    {card.type === 'base' ? 'FREE (0 points on base cards, including duplicates)' : '+10 points to this card'}
+                  </div>
+                </button>
+              )}
 
-              <button
-                onClick={() => handleAddEpiphany('divine')}
-                className="w-full py-3 px-4 rounded-lg text-left border-2 border-purple-300 dark:border-purple-600 bg-purple-50 dark:bg-purple-900 dark:bg-opacity-30 hover:bg-purple-100 dark:hover:bg-purple-800 dark:hover:bg-opacity-40 transition-colors"
-              >
-                <div className="font-semibold text-purple-700 dark:text-purple-300">Add Divine Epiphany</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">+20 points to this card</div>
-              </button>
+              {/* Divine Epiphany */}
+              {card.epiphanyType !== 'divine' && (
+                <button
+                  onClick={() => handleAddEpiphany('divine')}
+                  className="w-full py-3 px-4 rounded-lg text-left border-2 border-purple-300 dark:border-purple-600 bg-purple-50 dark:bg-purple-900 dark:bg-opacity-30 hover:bg-purple-100 dark:hover:bg-purple-800 dark:hover:bg-opacity-40 transition-colors"
+                >
+                  <div className="font-semibold text-purple-700 dark:text-purple-300">
+                    {card.epiphanyType === 'none' ? 'Add Divine Epiphany' : 'Switch to Divine Epiphany'}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">+20 points to this card</div>
+                </button>
+              )}
+
+              {/* Remove Epiphany */}
+              {card.epiphanyType !== 'none' && (
+                <button
+                  onClick={() => handleAddEpiphany('none')}
+                  className="w-full py-3 px-4 rounded-lg text-left border-2 border-gray-400 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <div className="font-semibold text-gray-700 dark:text-gray-300">Remove Epiphany</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Clear the current epiphany</div>
+                </button>
+              )}
             </>
-          )}
-
-          {!canAddEpiphany && !card.isRemoved && (
-            <div className="w-full py-3 px-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 opacity-60">
-              <div className="font-semibold text-gray-500 dark:text-gray-400">
-                {card.epiphanyType !== 'none' ? 'Epiphany Already Added' : 'Epiphany Unavailable'}
-              </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
-                Each card can only have one epiphany
-              </div>
-            </div>
           )}
 
           {canConvert ? (
@@ -192,6 +216,21 @@ const CardPopup = ({ cardId, onClose }) => {
               </div>
             </button>
           )}
+
+          {/* Delete/Reset button - always show */}
+          <button
+            onClick={handleDeleteOrReset}
+            className="w-full py-3 px-4 rounded-lg text-left border-2 border-orange-300 dark:border-orange-600 bg-orange-50 dark:bg-orange-900 dark:bg-opacity-30 hover:bg-orange-100 dark:hover:bg-orange-800 dark:hover:bg-opacity-40 transition-colors"
+          >
+            <div className="font-semibold text-orange-700 dark:text-orange-300">
+              {card.type === 'base' && !card.isDuplicate ? '🔄 Reset Card' : '🗑️ Delete Card'}
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-300">
+              {card.type === 'base' && !card.isDuplicate
+                ? 'Remove all modifications but keep card name'
+                : 'Permanently remove this card from deck'}
+            </div>
+          </button>
 
           {card.isRemoved && (
             <div className="w-full py-3 px-4 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700">
