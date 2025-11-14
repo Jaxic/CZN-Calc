@@ -240,6 +240,7 @@ export const DeckProvider = ({ children }) => {
     if (sourceCard) {
       const duplicateCard = {
         ...createCard(sourceCard.type, false),
+        cardName: sourceCard.cardName,
         epiphanyType: sourceCard.epiphanyType,
         isConverted: sourceCard.isConverted,
         isDuplicate: true,

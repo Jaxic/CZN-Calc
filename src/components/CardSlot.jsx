@@ -69,12 +69,13 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
     if (card.type === 'monster') points = 80;
     if (card.type === 'forbidden') points = 20;
 
-    // Regular epiphanies are FREE on base cards
+    // Regular epiphanies are FREE on ORIGINAL base cards only
+    // Duplicates always cost 10 points for regular epiphanies
     if (card.epiphanyType === 'regular') {
-      if (card.type !== 'base') {
+      if (card.isDuplicate || card.type !== 'base') {
         points += 10;
       }
-      // else: free for base cards, add 0
+      // else: free for original base cards only
     }
     if (card.epiphanyType === 'divine') points += 20;
 
