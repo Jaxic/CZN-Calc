@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { DeckProvider } from './context/DeckContext';
 import { ThemeProvider } from './context/ThemeContext';
 import CharacterSelector from './components/CharacterSelector';
@@ -88,6 +89,7 @@ function App() {
           </footer>
         </div>
       </DeckProvider>
+      <Analytics />
     </ThemeProvider>
   );
 }
