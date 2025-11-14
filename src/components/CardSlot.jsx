@@ -114,10 +114,10 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
       {!card.isLocked && (
         <button
           onClick={handleDeleteOrReset}
-          className="absolute top-1 right-1 w-6 h-6 flex items-center justify-center rounded bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white text-sm shadow-md transition-colors z-10"
+          className="absolute top-1 right-1 w-5 h-5 flex items-center justify-center rounded-full bg-red-500 dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700 text-white font-bold text-xs shadow-md transition-colors z-10"
           title={card.type === 'base' && !card.isDuplicate ? 'Reset card' : 'Delete card'}
         >
-          🗑️
+          ✕
         </button>
       )}
 
