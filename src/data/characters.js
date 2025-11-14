@@ -20,7 +20,7 @@ export const CHARACTERS = {
     "displayName": "Beryl",
     "startingCards": [
       "Launcher",
-      "Launcher",
+      "Charge Launcher",
       "Barrier"
     ],
     "uniqueCards": [
@@ -35,8 +35,8 @@ export const CHARACTERS = {
     "name": "cassius",
     "displayName": "Cassius",
     "startingCards": [
-      "Card",
-      "Card",
+      "Cards",
+      "Wild Card",
       "Mana Field"
     ],
     "uniqueCards": [
@@ -52,7 +52,7 @@ export const CHARACTERS = {
     "displayName": "Haru",
     "startingCards": [
       "Anchor",
-      "Anchor",
+      "Power Anchor",
       "Anchor Drop"
     ],
     "uniqueCards": [
@@ -100,7 +100,7 @@ export const CHARACTERS = {
     "displayName": "Khalipe",
     "startingCards": [
       "Lashing",
-      "Lashing",
+      "Upward Slash",
       "Tyr's Vow"
     ],
     "uniqueCards": [
@@ -148,7 +148,7 @@ export const CHARACTERS = {
     "displayName": "Magna",
     "startingCards": [
       "Frozen Fist",
-      "Frozen Fist",
+      "Frost Shield",
       "Frost Shield"
     ],
     "uniqueCards": [
@@ -164,7 +164,7 @@ export const CHARACTERS = {
     "displayName": "Maribell",
     "startingCards": [
       "Shelter Kick",
-      "Shelter Kick",
+      "Shelter Defense",
       "Shelter Defense"
     ],
     "uniqueCards": [
@@ -196,7 +196,7 @@ export const CHARACTERS = {
     "displayName": "Mika",
     "startingCards": [
       "Water Arrow",
-      "Water Arrow",
+      "Water Barrier",
       "Water Barrier"
     ],
     "uniqueCards": [
@@ -212,7 +212,7 @@ export const CHARACTERS = {
     "displayName": "Nia",
     "startingCards": [
       "Stroke",
-      "Stroke",
+      "Amp Therapy",
       "Amp Therapy"
     ],
     "uniqueCards": [
@@ -229,7 +229,7 @@ export const CHARACTERS = {
     "startingCards": [
       "Attack, My Minions",
       "Attack, My Minions",
-      "Celestial Healing"
+      "Heaven's Healing"
     ],
     "uniqueCards": [
       "Sacred Censer",
@@ -292,7 +292,7 @@ export const CHARACTERS = {
     "displayName": "Rin",
     "startingCards": [
       "Dark Mist Sword: First Form Attack",
-      "Dark Mist Sword: First Form Attack",
+      "Dark Mist Sword: Third Form Attack",
       "Protection"
     ],
     "uniqueCards": [
@@ -356,7 +356,7 @@ export const CHARACTERS = {
     "displayName": "Yuki",
     "startingCards": [
       "Longsword Slash",
-      "Longsword Slash",
+      "Rapid Slash",
       "Flowing Parry"
     ],
     "uniqueCards": [
