@@ -129,8 +129,8 @@ export function calculateDuplicationPoints(duplicatedCards) {
  * @returns {number} Total conversion points
  */
 export function calculateConversionPoints(totalConversions) {
-  // Each conversion adds 10 points (PRD says first conversion, but tracking all)
-  return totalConversions * 10;
+  // Only the first conversion adds 10 points (per PRD 2.5)
+  return totalConversions > 0 ? 10 : 0;
 }
 
 /**
