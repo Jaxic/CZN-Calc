@@ -170,12 +170,14 @@ export const DeckProvider = ({ children }) => {
     const baseCard = currentState.baseCards.find(c => c.id === cardId);
     if (baseCard) {
       cardToRemove = baseCard;
+      // Bonus: +20 if card is Base type OR has any epiphany
+      const hasBonus = cardToRemove.type === 'base' || cardToRemove.epiphanyType !== 'none';
       updateCurrentState({
         baseCards: currentState.baseCards.map(card =>
           card.id === cardId ? { ...card, isRemoved: true } : card
         ),
         totalRemovals: currentState.totalRemovals + 1,
-        removalsBonusCount: cardToRemove.type === 'base'
+        removalsBonusCount: hasBonus
           ? currentState.removalsBonusCount + 1
           : currentState.removalsBonusCount,
       });
@@ -186,12 +188,14 @@ export const DeckProvider = ({ children }) => {
     const additionalCard = currentState.additionalCards.find(c => c.id === cardId);
     if (additionalCard) {
       cardToRemove = additionalCard;
+      // Bonus: +20 if card is Base type OR has any epiphany
+      const hasBonus = cardToRemove.type === 'base' || cardToRemove.epiphanyType !== 'none';
       updateCurrentState({
         additionalCards: currentState.additionalCards.map(card =>
           card.id === cardId ? { ...card, isRemoved: true } : card
         ),
         totalRemovals: currentState.totalRemovals + 1,
-        removalsBonusCount: cardToRemove.type === 'base'
+        removalsBonusCount: hasBonus
           ? currentState.removalsBonusCount + 1
           : currentState.removalsBonusCount,
       });
@@ -269,7 +273,9 @@ export const DeckProvider = ({ children }) => {
 
       // Calculate counter decrements
       const removalsDecrement = card.isRemoved ? 1 : 0;
-      const removalsBonusDecrement = (card.isRemoved && card.type === 'base') ? 1 : 0;
+      // Bonus decrement: only if card was removed AND was base type OR had epiphany
+      const hasBonus = card.type === 'base' || card.epiphanyType !== 'none';
+      const removalsBonusDecrement = (card.isRemoved && hasBonus) ? 1 : 0;
       const conversionsDecrement = card.isConverted ? 1 : 0;
 
       // Reset card to initial state (preserving cardName and isLocked)
@@ -301,7 +307,9 @@ export const DeckProvider = ({ children }) => {
 
       // Calculate counter decrements
       const removalsDecrement = additionalCard.isRemoved ? 1 : 0;
-      const removalsBonusDecrement = (additionalCard.isRemoved && additionalCard.type === 'base') ? 1 : 0;
+      // Bonus decrement: only if card was removed AND was base type OR had epiphany
+      const hasBonus = additionalCard.type === 'base' || additionalCard.epiphanyType !== 'none';
+      const removalsBonusDecrement = (additionalCard.isRemoved && hasBonus) ? 1 : 0;
       const conversionsDecrement = additionalCard.isConverted ? 1 : 0;
       const duplicationsDecrement = additionalCard.isDuplicate ? 1 : 0;
 

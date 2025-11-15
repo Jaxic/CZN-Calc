@@ -30,7 +30,9 @@
 
 ### **2.2 Epiphany Modifiers (Only ONE per card)**
 - **Regular Epiphany**: +10 points
-- **Divine Epiphany**: +20 points
+  - **Exception**: FREE (0 points) on Base Cards (including duplicated base cards)
+  - Costs +10 points on Neutral, Monster, and Forbidden cards
+- **Divine Epiphany**: +20 points (always costs 20, regardless of card type)
 
 ### **2.3 Card Removal**
 - 1st removal: 0 points
@@ -39,6 +41,8 @@
 - 4th removal: 50 points
 - 5th+ removals: 70 points each
 - **Bonus**: +20 points if removed card was a Base Card OR had any Epiphany
+- **Important**: Removing Neutral cards (without epiphanies) costs 0 bonus points but still increments the deletion count
+  - Example: Remove 2 converted neutrals = (0+0) + (10+0) = 10 points total
 
 ### **2.4 Card Duplication**
 - 1st duplicate: 0 points
@@ -49,10 +53,14 @@
 - **Important**: Duplicated cards inherit all point modifiers from the original card (Epiphany, Divine Epiphany)
 
 ### **2.5 Card Conversion**
-- 1st conversion: 10 points
+- **10 points per conversion** (each conversion adds 10 points)
 - Converted cards keep their point-affecting elements (Epiphanies)
-- Conversion record persists even if card is removed
-- Conversion changes the card type to Neutral
+- Conversion cost persists even if the converted card is removed
+- Conversion changes the card type to Neutral (20 points base value)
+- Examples:
+  - Convert 1 card and keep it: 10 (conversion) + 20 (neutral) = 30 points
+  - Convert 2 cards and keep both: 20 (conversions) + 40 (neutrals) = 60 points
+  - Convert 1 card then delete it (1st delete): 10 (conversion stays) + 0 (delete cost) = 10 points
 
 ### **2.6 Save Data Cap by Tier**
 - Tier 1: 30 points
@@ -275,9 +283,9 @@ className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
 3. **Convert to Neutral Button**
    - Changes card type to Neutral (20 pts base)
    - Keeps any existing Epiphanies
-   - Adds +10 points for the conversion action
-   - Only first conversion adds points (track conversions globally)
-   - Button becomes disabled after use (can't convert twice)
+   - Adds +10 points for each conversion (tracked globally)
+   - Conversion cost persists even if card is deleted
+   - Button becomes disabled after use (can't convert same card twice)
 
 4. **Duplicate Card Button**
    - Creates a copy in Additional Cards section
@@ -509,6 +517,7 @@ function calculateDuplicationPoints(totalDuplications) {
 **calculateConversionPoints(totalConversions: number): number**
 ```javascript
 function calculateConversionPoints(totalConversions) {
+  // Each conversion costs 10 points
   return totalConversions * 10;
 }
 ```
