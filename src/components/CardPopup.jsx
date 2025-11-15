@@ -93,8 +93,11 @@ const CardPopup = ({ cardId, onClose }) => {
         </div>
 
         {/* Card visual representation */}
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900 dark:to-purple-900 dark:bg-opacity-30 p-6 rounded-lg mb-4 text-center border-2 border-gray-300 dark:border-gray-600">
+        <div className={`bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900 dark:to-purple-900 dark:bg-opacity-30 p-6 rounded-lg mb-4 text-center border-2 ${card.isConverted ? 'border-gray-500 dark:border-gray-400' : 'border-gray-300 dark:border-gray-600'}`}>
           <div className="font-bold text-lg text-gray-800 dark:text-gray-100 mb-2">{getCardTypeName()}</div>
+          {card.isConverted && card.cardName && (
+            <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">(was: {card.cardName})</div>
+          )}
           <div className="text-2xl font-bold text-primary dark:text-blue-400 mt-2">
             {calculateDisplayPoints()}
           </div>
@@ -105,7 +108,7 @@ const CardPopup = ({ cardId, onClose }) => {
             </div>
           )}
           {card.isConverted && (
-            <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">Converted to Neutral</div>
+            <div className="text-sm font-semibold text-gray-700 dark:text-gray-200 mt-1">Converted to Neutral</div>
           )}
           {card.type === 'forbidden' && (
             <div className="text-sm text-green-600 dark:text-green-400 font-semibold mt-1">Prioritized when over cap</div>
