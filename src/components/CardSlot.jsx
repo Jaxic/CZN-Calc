@@ -42,6 +42,11 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
       return `${baseClasses} bg-gray-200 dark:bg-gray-700 border-gray-400 dark:border-gray-600 opacity-50 cursor-pointer hover:opacity-70`;
     }
 
+    // Converted cards get a grey border
+    if (card.isConverted) {
+      return `${baseClasses} bg-white dark:bg-gray-700 border-gray-500 dark:border-gray-400 hover:border-gray-600 dark:hover:border-gray-300 hover:shadow-md cursor-pointer`;
+    }
+
     return `${baseClasses} bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-primary hover:shadow-md cursor-pointer`;
   };
 
@@ -136,7 +141,18 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
       ) : (
         <>
           {/* Card name (if available) or type badge */}
-          {card.cardName ? (
+          {card.isConverted ? (
+            <>
+              <div className="text-sm font-bold text-gray-700 dark:text-gray-200 mb-0.5 px-2 text-center">
+                NEUTRAL CARD
+              </div>
+              {card.cardName && (
+                <div className="text-xs text-gray-500 dark:text-gray-400 mb-1 px-2 text-center">
+                  (was: {card.cardName})
+                </div>
+              )}
+            </>
+          ) : card.cardName ? (
             <div className="text-sm font-bold text-gray-800 dark:text-gray-100 mb-1 px-2 text-center line-clamp-2 leading-tight">
               {card.cardName}
             </div>
@@ -157,11 +173,6 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
               {card.epiphanyType === 'regular' && 'Epiphany'}
               {card.epiphanyType === 'divine' && 'Divine'}
             </div>
-          )}
-
-          {/* Conversion indicator */}
-          {card.isConverted && (
-            <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Converted</div>
           )}
 
           {/* Removed overlay */}
