@@ -3,7 +3,7 @@ import { useDeck } from '../context/DeckContext';
 import { getPointsBreakdown, getStatus } from '../utils/calculations';
 
 const BreakdownPanel = () => {
-  const { deckState, currentPoints, cap, resetRun } = useDeck();
+  const { deckState, currentPoints, cap, resetRun, resetTeam } = useDeck();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const breakdown = getPointsBreakdown(deckState);
   const status = getStatus(currentPoints, cap);
@@ -12,9 +12,15 @@ const BreakdownPanel = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  const handleResetRun = () => {
-    if (window.confirm('Are you sure you want to reset the entire run? This will clear all cards and progress.')) {
+  const handleResetCharacter = () => {
+    if (window.confirm('Are you sure you want to reset this character? This will clear all cards and progress for the current team member only.')) {
       resetRun();
+    }
+  };
+
+  const handleResetTeam = () => {
+    if (window.confirm('Are you sure you want to reset the entire team? This will clear all cards and progress for all 3 team members and reset the tier.')) {
+      resetTeam();
     }
   };
 
@@ -109,13 +115,21 @@ const BreakdownPanel = () => {
           </div>
         </div>
 
-        {/* Reset Button */}
-        <button
-          onClick={handleResetRun}
-          className="w-full mt-4 py-2 px-4 bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white font-semibold rounded-lg transition-colors shadow-md"
-        >
-          Reset Run
-        </button>
+        {/* Reset Buttons */}
+        <div className="mt-4 space-y-2">
+          <button
+            onClick={handleResetCharacter}
+            className="w-full py-2 px-4 bg-orange-600 hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-800 text-white font-semibold rounded-lg transition-colors shadow-md"
+          >
+            Reset Character
+          </button>
+          <button
+            onClick={handleResetTeam}
+            className="w-full py-2 px-4 bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white font-semibold rounded-lg transition-colors shadow-md"
+          >
+            Reset Whole Team
+          </button>
+        </div>
       </div>
 
       {/* Mobile: Show summary when collapsed */}

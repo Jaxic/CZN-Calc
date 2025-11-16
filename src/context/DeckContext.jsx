@@ -37,7 +37,6 @@ const createInitialDeckState = () => {
   ];
 
   return {
-    tier: 8,
     baseCards: initialBaseCards,
     additionalCards: [],
     selectedCharacter: null,
@@ -52,7 +51,10 @@ export const DeckProvider = ({ children }) => {
   // Active team member (1, 2, or 3)
   const [activeTeamMember, setActiveTeamMember] = useState(1);
 
-  // State for all 3 team members
+  // Shared tier for all team members
+  const [sharedTier, setSharedTier] = useState(8);
+
+  // State for all 3 team members (without tier)
   const [teamMembers, setTeamMembers] = useState({
     1: createInitialDeckState(),
     2: createInitialDeckState(),
@@ -110,9 +112,9 @@ export const DeckProvider = ({ children }) => {
   // Check if undo is available
   const canUndo = history[activeTeamMember].length > 0;
 
-  // Calculate current deck state
+  // Calculate current deck state (using shared tier)
   const deckState = {
-    tier: currentState.tier,
+    tier: sharedTier,
     baseCards: currentState.baseCards,
     additionalCards: currentState.additionalCards,
     totalRemovals: currentState.totalRemovals,
@@ -122,7 +124,7 @@ export const DeckProvider = ({ children }) => {
   };
 
   const currentPoints = calculateTotalPoints(deckState);
-  const cap = TIER_CAPS[currentState.tier];
+  const cap = TIER_CAPS[sharedTier];
 
   // Switch to a different team member
   const switchTeamMember = (memberNumber) => {
@@ -139,9 +141,9 @@ export const DeckProvider = ({ children }) => {
     return character ? character.displayName : null;
   };
 
-  // Set tier
+  // Set tier (shared across all team members)
   const setTier = (newTier) => {
-    updateCurrentState({ tier: newTier });
+    setSharedTier(newTier);
   };
 
   // Unlock a base card (remove locked state)
@@ -360,6 +362,26 @@ export const DeckProvider = ({ children }) => {
     updateCurrentState(createInitialDeckState());
   };
 
+  // Reset all team members (entire team)
+  const resetTeam = () => {
+    // Reset all team members
+    setTeamMembers({
+      1: createInitialDeckState(),
+      2: createInitialDeckState(),
+      3: createInitialDeckState(),
+    });
+
+    // Clear all history
+    setHistory({
+      1: [],
+      2: [],
+      3: [],
+    });
+
+    // Reset tier to default
+    setSharedTier(8);
+  };
+
   // Select a character and populate base cards with their cards
   const selectCharacter = (characterName) => {
     const character = CHARACTERS[characterName];
@@ -384,7 +406,6 @@ export const DeckProvider = ({ children }) => {
     setTeamMembers(prev => ({
       ...prev,
       [activeTeamMember]: {
-        tier: 8,
         baseCards: characterBaseCards,
         additionalCards: [],
         selectedCharacter: characterName,
@@ -403,7 +424,7 @@ export const DeckProvider = ({ children }) => {
     getTeamMemberCharacter,
 
     // Current state
-    tier: currentState.tier,
+    tier: sharedTier,
     setTier,
     baseCards: currentState.baseCards,
     additionalCards: currentState.additionalCards,
@@ -430,6 +451,7 @@ export const DeckProvider = ({ children }) => {
     deleteOrResetCard,
     getCard,
     resetRun,
+    resetTeam,
     selectCharacter,
   };
 
