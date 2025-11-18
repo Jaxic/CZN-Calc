@@ -83,6 +83,64 @@ The bug has been fixed in the game! The following changes were made to remove th
 
 ---
 
+## Bug #2: Neutral Cards with Epiphanies Get Removal Bonus
+
+**Status:** Fixed
+**Date Reported:** 2025-11-18
+**Date Fixed:** 2025-11-18
+**Severity:** Affects removal cost calculations for converted neutral cards with epiphanies
+
+### Bug Description
+When a base card is converted to neutral and has an epiphany added, removing that card incorrectly applies the +20 removal bonus. Neutral cards should never receive the removal bonus, regardless of whether they have epiphanies.
+
+**Expected Behavior:** Convert to neutral (10) + Add epiphany + Remove (1st removal): 10 points total
+**Actual Behavior (BUG):** Convert to neutral (10) + Add epiphany + Remove (1st removal): 30 points total (incorrect +20 bonus)
+**Current Behavior (FIXED):** Convert to neutral (10) + Add epiphany + Remove (1st removal): 10 points total
+
+### Test Scenarios
+
+| Scenario | Conversion | Epiphany | Removal # | Expected Total | Bug Total |
+|----------|-----------|----------|-----------|----------------|-----------|
+| Convert + Remove (no epi) | 10 | - | 1st | 10 pts | 10 pts ✓ |
+| Convert + Regular Epi + Remove | 10 | +10 | 1st | 10 pts | 30 pts ✗ |
+| Convert + Divine Epi + Remove | 10 | +20 | 1st | 10 pts | 30 pts ✗ |
+| Convert + Remove (no epi) | 10 | - | 2nd | 20 pts | 20 pts ✓ |
+| Convert + Divine Epi + Remove | 10 | +20 | 2nd | 20 pts | 40 pts ✗ |
+
+### Changes Made
+
+#### Files Modified
+1. **src/context/DeckContext.jsx**
+   - Modified `removeCard()` function (lines 176 and 194)
+
+### Code Changes
+
+#### src/context/DeckContext.jsx - removeCard()
+```javascript
+// BEFORE (Line 176 and 194):
+const hasBonus = cardToRemove.type === 'base' || cardToRemove.epiphanyType !== 'none';
+
+// AFTER (Fixed):
+const hasBonus = cardToRemove.type === 'base' || (cardToRemove.epiphanyType !== 'none' && cardToRemove.type !== 'neutral');
+```
+
+### Fix Explanation
+
+The removal bonus logic was applying +20 points to any card that was either:
+- A base card, OR
+- Had any epiphany
+
+This caused neutral cards (from conversions) with epiphanies to incorrectly receive the bonus.
+
+The fix ensures neutral cards never receive the removal bonus by checking that the card type is not 'neutral' when evaluating epiphany bonuses. The updated logic applies +20 bonus only to:
+- Base cards (always), OR
+- Non-neutral cards with epiphanies (monster, forbidden)
+
+### Related Commits
+- TBD - Fix removal bonus for converted neutral cards with epiphanies
+
+---
+
 ## Template for Future Bugs
 
 ```markdown

@@ -172,8 +172,8 @@ export const DeckProvider = ({ children }) => {
     const baseCard = currentState.baseCards.find(c => c.id === cardId);
     if (baseCard) {
       cardToRemove = baseCard;
-      // Bonus: +20 if card is Base type OR has any epiphany
-      const hasBonus = cardToRemove.type === 'base' || cardToRemove.epiphanyType !== 'none';
+      // Bonus: +20 if card is Base type OR has any epiphany (but NOT neutral cards)
+      const hasBonus = cardToRemove.type === 'base' || (cardToRemove.epiphanyType !== 'none' && cardToRemove.type !== 'neutral');
       updateCurrentState({
         baseCards: currentState.baseCards.map(card =>
           card.id === cardId ? { ...card, isRemoved: true } : card
@@ -190,8 +190,8 @@ export const DeckProvider = ({ children }) => {
     const additionalCard = currentState.additionalCards.find(c => c.id === cardId);
     if (additionalCard) {
       cardToRemove = additionalCard;
-      // Bonus: +20 if card is Base type OR has any epiphany
-      const hasBonus = cardToRemove.type === 'base' || cardToRemove.epiphanyType !== 'none';
+      // Bonus: +20 if card is Base type OR has any epiphany (but NOT neutral cards)
+      const hasBonus = cardToRemove.type === 'base' || (cardToRemove.epiphanyType !== 'none' && cardToRemove.type !== 'neutral');
       updateCurrentState({
         additionalCards: currentState.additionalCards.map(card =>
           card.id === cardId ? { ...card, isRemoved: true } : card
