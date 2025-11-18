@@ -275,8 +275,8 @@ export const DeckProvider = ({ children }) => {
 
       // Calculate counter decrements
       const removalsDecrement = card.isRemoved ? 1 : 0;
-      // Bonus decrement: only if card was removed AND was base type OR had epiphany
-      const hasBonus = card.type === 'base' || card.epiphanyType !== 'none';
+      // Bonus decrement: only if card was removed AND was base type OR had epiphany (but NOT neutral cards)
+      const hasBonus = card.type === 'base' || (card.epiphanyType !== 'none' && card.type !== 'neutral');
       const removalsBonusDecrement = (card.isRemoved && hasBonus) ? 1 : 0;
       const conversionsDecrement = card.isConverted ? 1 : 0;
 
@@ -309,8 +309,8 @@ export const DeckProvider = ({ children }) => {
 
       // Calculate counter decrements
       const removalsDecrement = additionalCard.isRemoved ? 1 : 0;
-      // Bonus decrement: only if card was removed AND was base type OR had epiphany
-      const hasBonus = additionalCard.type === 'base' || additionalCard.epiphanyType !== 'none';
+      // Bonus decrement: only if card was removed AND was base type OR had epiphany (but NOT neutral cards)
+      const hasBonus = additionalCard.type === 'base' || (additionalCard.epiphanyType !== 'none' && additionalCard.type !== 'neutral');
       const removalsBonusDecrement = (additionalCard.isRemoved && hasBonus) ? 1 : 0;
       const conversionsDecrement = additionalCard.isConverted ? 1 : 0;
       const duplicationsDecrement = additionalCard.isDuplicate ? 1 : 0;
