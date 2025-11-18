@@ -110,11 +110,7 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
   const points = getCardPoints();
 
   return (
-    <button
-      onClick={onClick}
-      className={`${getCardClasses()} relative`}
-      disabled={card.isRemoved}
-    >
+    <div className="relative w-full">
       {/* Delete/Reset icon - top right corner */}
       {!card.isLocked && (
         <button
@@ -126,7 +122,12 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
         </button>
       )}
 
-      {card.isLocked ? (
+      <button
+        onClick={onClick}
+        className={`${getCardClasses()}`}
+        disabled={card.isRemoved}
+      >
+        {card.isLocked ? (
         <>
           <div className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">LOCKED</div>
           {card.cardName && (
@@ -183,7 +184,8 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
           )}
         </>
       )}
-    </button>
+      </button>
+    </div>
   );
 };
 
