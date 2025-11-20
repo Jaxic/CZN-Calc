@@ -262,7 +262,66 @@ Updated the removal bonus decrement logic to match the increment logic fixed in 
 - Neutral cards with epiphanies: NOT counted in bonus (consistent with Bug #2 fix)
 
 ### Related Commits
-- TBD - Fix red X button and inconsistent removal bonus logic in reset function
+- `16e4f97` - Fix red X button not working on removed cards and inconsistent reset logic
+
+---
+
+## Bug #4: Monster Cards with Regular Epiphanies Don't Cost Points
+
+**Status:** Active
+**Date Reported:** 2025-11-20
+**Severity:** Affects point calculations for monster cards with regular epiphanies
+
+### Bug Description
+Monster cards with regular epiphanies incorrectly do not add the +10 cost for the regular epiphany. The epiphany appears to be free on monster cards, when it should cost +10 points.
+
+**Expected Behavior:** Monster card (80) + Regular epiphany (10) = 90 points
+**Actual Behavior (BUG):** Monster card (80) + Regular epiphany (0) = 80 points
+**Current Behavior (WORKAROUND ACTIVE):** Calculator matches in-game bug: Monster card (80) + Regular epiphany (FREE) = 80 points
+
+### Changes Made
+
+#### Files Modified
+1. **src/utils/calculations.js**
+   - Modified `calculateCardPoints()` function
+   - Modified `getPointsBreakdown()` function
+
+2. **src/App.jsx**
+   - Added second bug report banner
+
+### Code Changes
+
+#### src/utils/calculations.js - calculateCardPoints()
+```javascript
+// Regular epiphanies are FREE on both base and monster cards
+if (card.epiphanyType === 'regular') {
+  if (card.type !== 'base' && card.type !== 'monster') {
+    points += 10;
+  }
+  // else: free for base and monster cards (including duplicates)
+}
+```
+
+#### src/utils/calculations.js - getPointsBreakdown()
+```javascript
+// Count regular epiphanies that cost points (NOT on base or monster cards - those are free)
+const regularEpiphaniesOnNonBase = activeCards.filter(c =>
+  c.epiphanyType === 'regular' && c.type !== 'base' && c.type !== 'monster'
+).length;
+```
+
+#### src/App.jsx - Bug Report Banner
+```javascript
+{/* Bug Report Banner - Monster Regular Epiphany */}
+<div className="bg-red-600 dark:bg-red-700 rounded-lg shadow-md p-4 md:p-6 mb-6">
+  <p className="text-black font-semibold text-center text-sm md:text-base">
+    --BUG REPORT-- Monster cards (+80) with regular epiphanies do not add the +10 cost (epiphany is FREE on monsters)
+  </p>
+</div>
+```
+
+### Related Commits
+- TBD - Implement workaround for monster card regular epiphany bug
 
 ---
 

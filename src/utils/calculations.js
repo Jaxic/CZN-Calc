@@ -49,11 +49,12 @@ export function calculateCardPoints(card) {
 
   // Add epiphany modifiers (only ONE per card)
   // Special rule: Regular epiphanies on base cards are FREE (even duplicates)
+  // IN-GAME BUG: Regular epiphanies on monster cards are also FREE
   if (card.epiphanyType === 'regular') {
-    if (card.type !== 'base') {
+    if (card.type !== 'base' && card.type !== 'monster') {
       points += 10;
     }
-    // else: free for base cards (including duplicates)
+    // else: free for base and monster cards (including duplicates)
   } else if (card.epiphanyType === 'divine') {
     points += 20; // Divine always costs 20 regardless of card type
 
@@ -228,10 +229,11 @@ export function getPointsBreakdown(deckState) {
   // Count neutral cards with divine epiphanies (for in-game bug calculation)
   const neutralCardsWithDivine = activeCards.filter(c => c.type === 'neutral' && c.epiphanyType === 'divine').length;
 
-  // Count regular epiphanies that cost points (NOT on base cards - those are free)
+  // Count regular epiphanies that cost points (NOT on base or monster cards - those are free)
   // Base cards (including duplicates) get free regular epiphanies
+  // IN-GAME BUG: Monster cards also get free regular epiphanies
   const regularEpiphaniesOnNonBase = activeCards.filter(c =>
-    c.epiphanyType === 'regular' && c.type !== 'base'
+    c.epiphanyType === 'regular' && c.type !== 'base' && c.type !== 'monster'
   ).length;
 
   // Calculate points by category
