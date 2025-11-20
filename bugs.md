@@ -6,9 +6,9 @@ This file tracks known bugs in Chaos Zero Nightmare that affect the calculator's
 
 ## Bug #1: Neutral Cards with Divine Epiphanies
 
-**Status:** Fixed
+**Status:** Active
 **Date Reported:** 2025-11-14
-**Date Fixed:** 2025-11-17
+**Date Fixed:** 2025-11-17 (reverted on 2025-11-20 - bug returned in game)
 **Severity:** Affects point calculations for neutral cards with divine epiphanies
 
 ### Bug Description
@@ -16,7 +16,7 @@ Neutral cards (+20) incorrectly count both the proc of regular epiphany (+10) an
 
 **Expected Behavior:** Neutral card (20) + Divine epiphany (20) = 40 points
 **Actual Behavior (BUG):** Neutral card (20) + Divine epiphany (20) + Regular epiphany proc (10) = 50 points
-**Current Behavior (FIXED):** Neutral card (20) + Divine epiphany (20) = 40 points
+**Current Behavior (WORKAROUND ACTIVE):** Calculator matches in-game bug: Neutral card (20) + Divine epiphany (20) + Bug proc (10) = 50 points
 
 ### Changes Made
 
@@ -65,15 +65,17 @@ const divineEpiphaniesPoints = divineEpiphanies * 20 + neutralCardsWithDivine * 
 </div>
 ```
 
-### Fix Applied
+### Fix Applied (Then Reverted)
 
-The bug has been fixed in the game! The following changes were made to remove the bug workaround:
+**2025-11-17**: The bug was fixed in the game! Workaround was removed via commit `314bc3a`.
 
-1. **Removed the bug banner** from `src/App.jsx`
-2. **Reverted calculations** in `src/utils/calculations.js`:
-   - Removed the +10 bonus for neutral cards with divine epiphanies from `calculateCardPoints()`
-   - Removed the neutral cards with divine filter from `getPointsBreakdown()`
-   - Simplified divine epiphanies calculation to just `divineEpiphanies * 20`
+**2025-11-20**: Bug has returned in the game. Workaround has been re-implemented to match the in-game behavior:
+
+1. **Re-added the bug banner** to `src/App.jsx`
+2. **Re-applied bug calculations** in `src/utils/calculations.js`:
+   - Added back the +10 bonus for neutral cards with divine epiphanies in `calculateCardPoints()`
+   - Added back the neutral cards with divine filter in `getPointsBreakdown()`
+   - Divine epiphanies calculation now includes: `divineEpiphanies * 20 + neutralCardsWithDivine * 10`
 
 ### Related Commits
 - `861185d` - Update calculations to match in-game bug for neutral cards with divine epiphanies
