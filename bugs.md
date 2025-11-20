@@ -6,9 +6,9 @@ This file tracks known bugs in Chaos Zero Nightmare that affect the calculator's
 
 ## Bug #1: Neutral Cards with Divine Epiphanies
 
-**Status:** Fixed
+**Status:** Active
 **Date Reported:** 2025-11-14
-**Date Fixed:** 2025-11-17
+**Date Fixed:** 2025-11-17 (reverted on 2025-11-20 - bug returned in game)
 **Severity:** Affects point calculations for neutral cards with divine epiphanies
 
 ### Bug Description
@@ -16,7 +16,7 @@ Neutral cards (+20) incorrectly count both the proc of regular epiphany (+10) an
 
 **Expected Behavior:** Neutral card (20) + Divine epiphany (20) = 40 points
 **Actual Behavior (BUG):** Neutral card (20) + Divine epiphany (20) + Regular epiphany proc (10) = 50 points
-**Current Behavior (FIXED):** Neutral card (20) + Divine epiphany (20) = 40 points
+**Current Behavior (WORKAROUND ACTIVE):** Calculator matches in-game bug: Neutral card (20) + Divine epiphany (20) + Bug proc (10) = 50 points
 
 ### Changes Made
 
@@ -65,15 +65,17 @@ const divineEpiphaniesPoints = divineEpiphanies * 20 + neutralCardsWithDivine * 
 </div>
 ```
 
-### Fix Applied
+### Fix Applied (Then Reverted)
 
-The bug has been fixed in the game! The following changes were made to remove the bug workaround:
+**2025-11-17**: The bug was fixed in the game! Workaround was removed via commit `314bc3a`.
 
-1. **Removed the bug banner** from `src/App.jsx`
-2. **Reverted calculations** in `src/utils/calculations.js`:
-   - Removed the +10 bonus for neutral cards with divine epiphanies from `calculateCardPoints()`
-   - Removed the neutral cards with divine filter from `getPointsBreakdown()`
-   - Simplified divine epiphanies calculation to just `divineEpiphanies * 20`
+**2025-11-20**: Bug has returned in the game. Workaround has been re-implemented to match the in-game behavior:
+
+1. **Re-added the bug banner** to `src/App.jsx`
+2. **Re-applied bug calculations** in `src/utils/calculations.js`:
+   - Added back the +10 bonus for neutral cards with divine epiphanies in `calculateCardPoints()`
+   - Added back the neutral cards with divine filter in `getPointsBreakdown()`
+   - Divine epiphanies calculation now includes: `divineEpiphanies * 20 + neutralCardsWithDivine * 10`
 
 ### Related Commits
 - `861185d` - Update calculations to match in-game bug for neutral cards with divine epiphanies
@@ -260,7 +262,66 @@ Updated the removal bonus decrement logic to match the increment logic fixed in 
 - Neutral cards with epiphanies: NOT counted in bonus (consistent with Bug #2 fix)
 
 ### Related Commits
-- TBD - Fix red X button and inconsistent removal bonus logic in reset function
+- `16e4f97` - Fix red X button not working on removed cards and inconsistent reset logic
+
+---
+
+## Bug #4: Monster Cards with Regular Epiphanies Don't Cost Points
+
+**Status:** Active
+**Date Reported:** 2025-11-20
+**Severity:** Affects point calculations for monster cards with regular epiphanies
+
+### Bug Description
+Monster cards with regular epiphanies incorrectly do not add the +10 cost for the regular epiphany. The epiphany appears to be free on monster cards, when it should cost +10 points.
+
+**Expected Behavior:** Monster card (80) + Regular epiphany (10) = 90 points
+**Actual Behavior (BUG):** Monster card (80) + Regular epiphany (0) = 80 points
+**Current Behavior (WORKAROUND ACTIVE):** Calculator matches in-game bug: Monster card (80) + Regular epiphany (FREE) = 80 points
+
+### Changes Made
+
+#### Files Modified
+1. **src/utils/calculations.js**
+   - Modified `calculateCardPoints()` function
+   - Modified `getPointsBreakdown()` function
+
+2. **src/App.jsx**
+   - Added second bug report banner
+
+### Code Changes
+
+#### src/utils/calculations.js - calculateCardPoints()
+```javascript
+// Regular epiphanies are FREE on both base and monster cards
+if (card.epiphanyType === 'regular') {
+  if (card.type !== 'base' && card.type !== 'monster') {
+    points += 10;
+  }
+  // else: free for base and monster cards (including duplicates)
+}
+```
+
+#### src/utils/calculations.js - getPointsBreakdown()
+```javascript
+// Count regular epiphanies that cost points (NOT on base or monster cards - those are free)
+const regularEpiphaniesOnNonBase = activeCards.filter(c =>
+  c.epiphanyType === 'regular' && c.type !== 'base' && c.type !== 'monster'
+).length;
+```
+
+#### src/App.jsx - Bug Report Banner
+```javascript
+{/* Bug Report Banner - Monster Regular Epiphany */}
+<div className="bg-red-600 dark:bg-red-700 rounded-lg shadow-md p-4 md:p-6 mb-6">
+  <p className="text-black font-semibold text-center text-sm md:text-base">
+    --BUG REPORT-- Monster cards (+80) with regular epiphanies do not add the +10 cost (epiphany is FREE on monsters)
+  </p>
+</div>
+```
+
+### Related Commits
+- TBD - Implement workaround for monster card regular epiphany bug
 
 ---
 
