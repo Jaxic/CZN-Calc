@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { DeckProvider } from './context/DeckContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -17,6 +17,19 @@ import QuickLookupSection from './components/QuickLookupSection';
 import BulkCounterSection from './components/BulkCounterSection';
 
 function App() {
+  const [quickCheckExpanded, setQuickCheckExpanded] = useState(false);
+
+  const handleQuickCheckClick = () => {
+    setQuickCheckExpanded(true);
+    // Scroll to the section
+    setTimeout(() => {
+      const quickLookup = document.getElementById('quick-lookup');
+      if (quickLookup) {
+        quickLookup.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 50);
+  };
+
   return (
     <ThemeProvider>
       <DeckProvider>
@@ -47,7 +60,7 @@ function App() {
             {/* Character, Tier Selector & Status Bar */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 mb-6 transition-colors">
               <div className="space-y-4">
-                <CharacterSelector />
+                <CharacterSelector onQuickCheckClick={handleQuickCheckClick} />
                 <TierSelector />
                 <StatusBar />
               </div>
@@ -74,7 +87,10 @@ function App() {
 
                 {/* Quick Lookup */}
                 <div id="quick-lookup" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 transition-colors">
-                  <QuickLookupSection />
+                  <QuickLookupSection
+                    isExpanded={quickCheckExpanded}
+                    setIsExpanded={setQuickCheckExpanded}
+                  />
                 </div>
 
                 {/* Bulk Counter */}

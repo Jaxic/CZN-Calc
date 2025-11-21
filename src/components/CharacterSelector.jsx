@@ -2,7 +2,7 @@ import React from 'react';
 import { useDeck } from '../context/DeckContext';
 import { getCharacterList } from '../data/characters';
 
-const CharacterSelector = () => {
+const CharacterSelector = ({ onQuickCheckClick }) => {
   const { selectedCharacter, selectCharacter } = useDeck();
   const characters = getCharacterList();
 
@@ -14,9 +14,8 @@ const CharacterSelector = () => {
   };
 
   const handleQuickCheck = () => {
-    const quickLookup = document.getElementById('quick-lookup');
-    if (quickLookup) {
-      quickLookup.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (onQuickCheckClick) {
+      onQuickCheckClick();
     }
   };
 
