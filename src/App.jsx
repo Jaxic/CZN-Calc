@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { DeckProvider } from './context/DeckContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -13,24 +13,9 @@ import DuplicationTracker from './components/DuplicationTracker';
 import BreakdownPanel from './components/BreakdownPanel';
 import ThemeToggle from './components/ThemeToggle';
 import KnownIssuesSection from './components/KnownIssuesSection';
-import QuickLookupSection from './components/QuickLookupSection';
-import BulkCounterSection from './components/BulkCounterSection';
 import QuickToolsSection from './components/QuickToolsSection';
 
 function App() {
-  const [quickCheckExpanded, setQuickCheckExpanded] = useState(false);
-
-  const handleQuickCheckClick = () => {
-    setQuickCheckExpanded(true);
-    // Scroll to the section
-    setTimeout(() => {
-      const quickLookup = document.getElementById('quick-lookup');
-      if (quickLookup) {
-        quickLookup.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 50);
-  };
-
   return (
     <ThemeProvider>
       <DeckProvider>
@@ -67,8 +52,8 @@ function App() {
               </div>
             </div>
 
-            {/* Quick Tools */}
-            <QuickToolsSection onQuickCheckClick={handleQuickCheckClick} />
+            {/* Quick Check */}
+            <QuickToolsSection />
 
             {/* Team Tabs */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 mb-6 transition-colors">
@@ -87,19 +72,6 @@ function App() {
                 {/* Additional Cards */}
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 transition-colors">
                   <AdditionalCardsSection />
-                </div>
-
-                {/* Quick Lookup */}
-                <div id="quick-lookup" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 transition-colors">
-                  <QuickLookupSection
-                    isExpanded={quickCheckExpanded}
-                    setIsExpanded={setQuickCheckExpanded}
-                  />
-                </div>
-
-                {/* Bulk Counter */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 transition-colors">
-                  <BulkCounterSection />
                 </div>
               </div>
 
