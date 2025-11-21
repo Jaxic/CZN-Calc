@@ -73,7 +73,7 @@ function App() {
                 </div>
 
                 {/* Quick Lookup */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 transition-colors">
+                <div id="quick-lookup" className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 transition-colors">
                   <QuickLookupSection />
                 </div>
 

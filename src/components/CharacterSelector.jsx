@@ -14,9 +14,9 @@ const CharacterSelector = () => {
   };
 
   const handleQuickCheck = () => {
-    const breakdownPanel = document.getElementById('breakdown-panel');
-    if (breakdownPanel) {
-      breakdownPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const quickLookup = document.getElementById('quick-lookup');
+    if (quickLookup) {
+      quickLookup.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
