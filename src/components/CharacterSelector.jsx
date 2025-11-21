@@ -13,6 +13,13 @@ const CharacterSelector = () => {
     }
   };
 
+  const handleQuickCheck = () => {
+    const breakdownPanel = document.getElementById('breakdown-panel');
+    if (breakdownPanel) {
+      breakdownPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <div className="space-y-2">
       <label htmlFor="character-select" className="block text-sm font-semibold text-gray-700 dark:text-gray-200">
@@ -32,6 +39,12 @@ const CharacterSelector = () => {
             </option>
           ))}
         </select>
+        <button
+          onClick={handleQuickCheck}
+          className="px-4 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors shadow-md whitespace-nowrap"
+        >
+          Quick Check
+        </button>
         <a
           href="https://buymeacoffee.com/jaxic"
           target="_blank"

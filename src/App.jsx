@@ -83,7 +83,7 @@ function App() {
 
             {/* Right column: Breakdown Panel and Trackers */}
             <div className="lg:col-span-1">
-              <div className="lg:sticky lg:top-6 space-y-4">
+              <div id="breakdown-panel" className="lg:sticky lg:top-6 space-y-4">
                 <BreakdownPanel />
 
                 {/* Compact Trackers */}
