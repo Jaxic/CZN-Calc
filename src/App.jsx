@@ -15,6 +15,7 @@ import ThemeToggle from './components/ThemeToggle';
 import KnownIssuesSection from './components/KnownIssuesSection';
 import QuickLookupSection from './components/QuickLookupSection';
 import BulkCounterSection from './components/BulkCounterSection';
+import QuickToolsSection from './components/QuickToolsSection';
 
 function App() {
   const [quickCheckExpanded, setQuickCheckExpanded] = useState(false);
@@ -60,11 +61,14 @@ function App() {
             {/* Character, Tier Selector & Status Bar */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 mb-6 transition-colors">
               <div className="space-y-4">
-                <CharacterSelector onQuickCheckClick={handleQuickCheckClick} />
+                <CharacterSelector />
                 <TierSelector />
                 <StatusBar />
               </div>
             </div>
+
+            {/* Quick Tools */}
+            <QuickToolsSection onQuickCheckClick={handleQuickCheckClick} />
 
             {/* Team Tabs */}
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 mb-6 transition-colors">
