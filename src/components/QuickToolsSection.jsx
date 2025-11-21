@@ -5,14 +5,16 @@ const QuickToolsSection = () => {
   const [isExpanded, setIsExpanded] = useState(false); // Start collapsed
   const [cardType, setCardType] = useState('base');
   const [epiphanyType, setEpiphanyType] = useState('none');
-  const [isDuplicate, setIsDuplicate] = useState(false);
-  const [duplicatePosition, setDuplicatePosition] = useState(1);
+  const [isCopy, setIsCopy] = useState(false);
+  const [copiesBefore, setCopiesBefore] = useState(0);
 
-  // Calculate duplication cost based on position
-  const getDuplicationCost = (position) => {
-    const costs = [0, 0, 10, 30, 50];
-    if (position >= 5) return 70;
-    return costs[position] || 0;
+  // Calculate duplication cost based on how many copies came before
+  const getDuplicationCost = (copiesBefore) => {
+    // If there are X copies before, this is the (X+1)th copy
+    const copyNumber = copiesBefore + 1;
+    const costs = [0, 0, 10, 30, 50]; // Index: 0=N/A, 1=1st copy, 2=2nd copy, etc.
+    if (copyNumber >= 5) return 70;
+    return costs[copyNumber] || 0;
   };
 
   // Calculate the result
@@ -26,11 +28,11 @@ const QuickToolsSection = () => {
     };
 
     const cardValue = calculateCardPoints(mockCard);
-    const duplicationCost = isDuplicate ? getDuplicationCost(duplicatePosition) : 0;
-    const total = cardValue + duplicationCost;
+    const copyCost = isCopy ? getDuplicationCost(copiesBefore) : 0;
+    const total = cardValue + copyCost;
 
-    return { cardValue, duplicationCost, total };
-  }, [cardType, epiphanyType, isDuplicate, duplicatePosition]);
+    return { cardValue, copyCost, total };
+  }, [cardType, epiphanyType, isCopy, copiesBefore]);
 
   const cardTypeButtons = [
     { value: 'base', label: 'Base', color: 'bg-blue-100 dark:bg-blue-900/30 border-blue-500 text-blue-800 dark:text-blue-300' },
@@ -45,12 +47,12 @@ const QuickToolsSection = () => {
     { value: 'divine', label: 'Divine (+20)' },
   ];
 
-  const duplicatePositions = [
-    { value: 1, label: '1st (0 pts)' },
-    { value: 2, label: '2nd (10 pts)' },
-    { value: 3, label: '3rd (30 pts)' },
-    { value: 4, label: '4th (50 pts)' },
-    { value: 5, label: '5th+ (70 pts)' },
+  const copyOptions = [
+    { value: 0, label: '0 copies before (1st copy - 0 pts)' },
+    { value: 1, label: '1 copy before (2nd copy - 10 pts)' },
+    { value: 2, label: '2 copies before (3rd copy - 30 pts)' },
+    { value: 3, label: '3 copies before (4th copy - 50 pts)' },
+    { value: 4, label: '4+ copies before (5th+ copy - 70 pts)' },
   ];
 
   return (
@@ -139,31 +141,31 @@ const QuickToolsSection = () => {
             )}
           </div>
 
-          {/* Duplicate Toggle */}
+          {/* Copy Toggle */}
           <div>
             <label className="flex items-center space-x-2 text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
               <input
                 type="checkbox"
-                checked={isDuplicate}
-                onChange={(e) => setIsDuplicate(e.target.checked)}
+                checked={isCopy}
+                onChange={(e) => setIsCopy(e.target.checked)}
                 className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
               />
-              <span>Is this a duplicate?</span>
+              <span>Is this a copy of an existing card?</span>
             </label>
 
-            {isDuplicate && (
+            {isCopy && (
               <div className="ml-6 mt-2">
                 <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">
-                  Duplicate Position
+                  How many copies exist before this one?
                 </label>
                 <select
-                  value={duplicatePosition}
-                  onChange={(e) => setDuplicatePosition(Number(e.target.value))}
+                  value={copiesBefore}
+                  onChange={(e) => setCopiesBefore(Number(e.target.value))}
                   className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
-                  {duplicatePositions.map((pos) => (
-                    <option key={pos.value} value={pos.value}>
-                      {pos.label}
+                  {copyOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
                     </option>
                   ))}
                 </select>
@@ -181,10 +183,10 @@ const QuickToolsSection = () => {
                 <span>Card Value:</span>
                 <span className="font-semibold">{result.cardValue} pts</span>
               </div>
-              {isDuplicate && (
+              {isCopy && (
                 <div className="flex justify-between text-gray-700 dark:text-gray-300">
-                  <span>Duplication Cost:</span>
-                  <span className="font-semibold">{result.duplicationCost} pts</span>
+                  <span>Copy Cost:</span>
+                  <span className="font-semibold">{result.copyCost} pts</span>
                 </div>
               )}
               <div className="border-t-2 border-blue-300 dark:border-blue-600 pt-2 mt-2">
