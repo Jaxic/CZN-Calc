@@ -7,6 +7,7 @@ const QuickToolsSection = () => {
   const [epiphanyType, setEpiphanyType] = useState('none');
   const [isCopy, setIsCopy] = useState(false);
   const [copiesBefore, setCopiesBefore] = useState(0);
+  const [isConverted, setIsConverted] = useState(false);
 
   // Calculate duplication cost based on how many copies came before
   const getDuplicationCost = (copiesBefore) => {
@@ -29,10 +30,11 @@ const QuickToolsSection = () => {
 
     const cardValue = calculateCardPoints(mockCard);
     const copyCost = isCopy ? getDuplicationCost(copiesBefore) : 0;
-    const total = cardValue + copyCost;
+    const conversionCost = isConverted ? 10 : 0;
+    const total = cardValue + copyCost + conversionCost;
 
-    return { cardValue, copyCost, total };
-  }, [cardType, epiphanyType, isCopy, copiesBefore]);
+    return { cardValue, copyCost, conversionCost, total };
+  }, [cardType, epiphanyType, isCopy, copiesBefore, isConverted]);
 
   const cardTypeButtons = [
     { value: 'base', label: 'Base', color: 'bg-blue-100 dark:bg-blue-900/30 border-blue-500 text-blue-800 dark:text-blue-300' },
@@ -173,6 +175,22 @@ const QuickToolsSection = () => {
             )}
           </div>
 
+          {/* Conversion Toggle */}
+          <div>
+            <label className="flex items-center space-x-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <input
+                type="checkbox"
+                checked={isConverted}
+                onChange={(e) => setIsConverted(e.target.checked)}
+                className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+              />
+              <span>Is this a converted card? (+10 pts)</span>
+            </label>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 ml-6">
+              Conversion changes the card type to Neutral and adds 10 pts
+            </p>
+          </div>
+
           {/* Result Display */}
           <div className="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-900/20 dark:to-green-900/20 border-2 border-blue-300 dark:border-blue-600 rounded-lg p-4">
             <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3">
@@ -187,6 +205,12 @@ const QuickToolsSection = () => {
                 <div className="flex justify-between text-gray-700 dark:text-gray-300">
                   <span>Copy Cost:</span>
                   <span className="font-semibold">{result.copyCost} pts</span>
+                </div>
+              )}
+              {isConverted && (
+                <div className="flex justify-between text-gray-700 dark:text-gray-300">
+                  <span>Conversion Cost:</span>
+                  <span className="font-semibold">{result.conversionCost} pts</span>
                 </div>
               )}
               <div className="border-t-2 border-blue-300 dark:border-blue-600 pt-2 mt-2">
