@@ -65,7 +65,7 @@ const QuickLookupSection = ({ isExpanded: externalIsExpanded, setIsExpanded: ext
       >
         <div>
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-            ⚡ Quick Check
+            Quick Check
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400">
             Calculate the cost of adding a single card

@@ -112,7 +112,7 @@ const BulkCounterSection = () => {
       >
         <div>
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-            📊 Bulk Counter
+            Bulk Counter
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400">
             Calculate total points from counts
