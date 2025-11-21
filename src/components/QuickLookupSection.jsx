@@ -1,8 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { calculateCardPoints } from '../utils/calculations';
 
-const QuickLookupSection = () => {
-  const [isExpanded, setIsExpanded] = useState(false); // Start collapsed
+const QuickLookupSection = ({ isExpanded: externalIsExpanded, setIsExpanded: externalSetIsExpanded }) => {
+  // Use external state if provided, otherwise use internal state
+  const [internalIsExpanded, setInternalIsExpanded] = useState(false);
+  const isExpanded = externalIsExpanded !== undefined ? externalIsExpanded : internalIsExpanded;
+  const setIsExpanded = externalSetIsExpanded || setInternalIsExpanded;
   const [cardType, setCardType] = useState('base');
   const [epiphanyType, setEpiphanyType] = useState('none');
   const [isDuplicate, setIsDuplicate] = useState(false);
@@ -62,7 +65,7 @@ const QuickLookupSection = () => {
       >
         <div>
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">
-            ⚡ Quick Lookup
+            Quick Check
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400">
             Calculate the cost of adding a single card

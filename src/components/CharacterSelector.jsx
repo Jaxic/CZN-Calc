@@ -2,7 +2,7 @@ import React from 'react';
 import { useDeck } from '../context/DeckContext';
 import { getCharacterList } from '../data/characters';
 
-const CharacterSelector = () => {
+const CharacterSelector = ({ onQuickCheckClick }) => {
   const { selectedCharacter, selectCharacter } = useDeck();
   const characters = getCharacterList();
 
@@ -10,6 +10,12 @@ const CharacterSelector = () => {
     const characterName = e.target.value;
     if (characterName) {
       selectCharacter(characterName);
+    }
+  };
+
+  const handleQuickCheck = () => {
+    if (onQuickCheckClick) {
+      onQuickCheckClick();
     }
   };
 
@@ -32,6 +38,12 @@ const CharacterSelector = () => {
             </option>
           ))}
         </select>
+        <button
+          onClick={handleQuickCheck}
+          className="px-4 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors shadow-md whitespace-nowrap"
+        >
+          Quick Check
+        </button>
         <a
           href="https://buymeacoffee.com/jaxic"
           target="_blank"
