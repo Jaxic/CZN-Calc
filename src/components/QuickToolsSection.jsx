@@ -9,6 +9,15 @@ const QuickToolsSection = () => {
   const [copiesBefore, setCopiesBefore] = useState(0);
   const [isConverted, setIsConverted] = useState(false);
 
+  // Reset all fields to default values
+  const handleReset = () => {
+    setCardType('base');
+    setEpiphanyType('none');
+    setIsCopy(false);
+    setCopiesBefore(0);
+    setIsConverted(false);
+  };
+
   // Calculate duplication cost based on how many copies came before
   const getDuplicationCost = (copiesBefore) => {
     // If there are X copies before, this is the (X+1)th copy
@@ -222,6 +231,16 @@ const QuickToolsSection = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Reset Button */}
+          <div className="flex justify-center">
+            <button
+              onClick={handleReset}
+              className="px-6 py-2 bg-gray-500 hover:bg-gray-600 dark:bg-gray-600 dark:hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors shadow-md hover:shadow-lg"
+            >
+              Reset Quick Check
+            </button>
           </div>
         </div>
       )}
