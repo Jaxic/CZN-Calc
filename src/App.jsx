@@ -63,6 +63,19 @@ function App() {
 
           {/* Main Content */}
           <main className="container mx-auto px-4 py-6">
+            {/* 1. Leaderboard right under the orange header – highest visibility */}
+            <div className="text-center my-8">
+              <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7093395988392599"
+                      crossOrigin="anonymous"></script>
+              <ins className="adsbygoogle"
+                   style={{display:"block"}}
+                   data-ad-client="ca-pub-7093395988392599"
+                   data-ad-slot="4985223624"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+              <script dangerouslySetInnerHTML={{__html: "(adsbygoogle = window.adsbygoogle || []).push({});"}} />
+            </div>
+
             {/* Collapsible Guide Section */}
             <section className="mb-8 bg-gray-50 dark:bg-gray-800 rounded-lg p-4 md:p-6">
               <details ref={detailsRef} className="group">
@@ -116,6 +129,17 @@ function App() {
                 </div>
               </details>
             </section>
+
+            {/* 2. Optional second ad – large rectangle under the guide (great CTR) */}
+            <div className="max-w-4xl mx-auto my-10 text-center">
+              <ins className="adsbygoogle"
+                   style={{display:"block"}}
+                   data-ad-client="ca-pub-7093395988392599"
+                   data-ad-slot="4985223624"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+              <script dangerouslySetInnerHTML={{__html: "(adsbygoogle = window.adsbygoogle || []).push({});"}} />
+            </div>
 
             {/* Known Issues - Collapsible */}
             <KnownIssuesSection />
