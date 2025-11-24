@@ -22,14 +22,14 @@ function App() {
     const details = detailsRef.current;
     if (!details) return;
 
-    // Check localStorage and set initial state
-    if (localStorage.getItem('czn-guide-collapsed') === 'true') {
-      details.removeAttribute('open');
+    // Check localStorage and set initial state (default is collapsed)
+    if (localStorage.getItem('czn-guide-expanded') === 'true') {
+      details.setAttribute('open', '');
     }
 
     // Listen for toggle events
     const handleToggle = () => {
-      localStorage.setItem('czn-guide-collapsed', !details.open);
+      localStorage.setItem('czn-guide-expanded', details.open);
     };
 
     details.addEventListener('toggle', handleToggle);
@@ -65,9 +65,9 @@ function App() {
           <main className="container mx-auto px-4 py-6">
             {/* Collapsible Guide Section */}
             <section className="mb-8 bg-gray-50 dark:bg-gray-800 rounded-lg p-4 md:p-6">
-              <details ref={detailsRef} open className="group">
+              <details ref={detailsRef} className="group">
                 <summary className="cursor-pointer font-semibold text-lg text-gray-900 dark:text-white hover:text-orange-600 dark:hover:text-orange-400 transition-colors py-2 list-none">
-                  Chaos Run Guide: Caps, Formulas & Tips (click to collapse)
+                  Chaos Run Guide: Caps, Formulas & Tips
                 </summary>
                 <div className="mt-6 p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md space-y-6 text-gray-800 dark:text-gray-200">
                   <p>
@@ -111,17 +111,12 @@ function App() {
 
                   <p className="text-sm border-t dark:border-gray-600 pt-4">
                     <a href="https://discord.com/invite/chaoszeronightmare" className="underline text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300">Official Discord</a> | 
-                    <a href="https://www.reddit.com/r/ChaosZeroNightmare/" className="underline text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 ml-1">r/ChaosZeroNightmare</a> | 
-                    <span className="ml-1">More: <a href="/blog" className="underline text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300">Guides</a></span>
+                    <a href="https://www.reddit.com/r/ChaosZeroNightmare/" className="underline text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 ml-1">r/ChaosZeroNightmare</a>
                   </p>
                 </div>
               </details>
             </section>
 
-            {/* Calculator Section Header */}
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6">
-              Your Calculator
-            </h2>
             {/* Known Issues - Collapsible */}
             <KnownIssuesSection />
 
