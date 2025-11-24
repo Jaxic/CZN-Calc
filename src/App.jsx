@@ -80,6 +80,20 @@ function App() {
               <div id="breakdown-panel" className="lg:sticky lg:top-6 space-y-4">
                 <BreakdownPanel />
 
+                {/* Google AdSense Ad */}
+                <div className="py-4 flex justify-center">
+                  {/* CZN */}
+                  <ins className="adsbygoogle"
+                    style={{display:'block'}}
+                    data-ad-client="ca-pub-7093395988392599"
+                    data-ad-slot="4985223624"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                  <script dangerouslySetInnerHTML={{
+                    __html: '(adsbygoogle = window.adsbygoogle || []).push({});'
+                  }} />
+                </div>
+
                 {/* Compact Trackers */}
                 <div className="space-y-3">
                   <RemovalTracker />
