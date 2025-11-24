@@ -67,7 +67,7 @@ function App() {
             <section className="mb-8 bg-gray-50 dark:bg-gray-800 rounded-lg p-4 md:p-6">
               <details ref={detailsRef} className="group">
                 <summary className="cursor-pointer font-semibold text-lg text-gray-900 dark:text-white hover:text-orange-600 dark:hover:text-orange-400 transition-colors py-2 list-none">
-                  Chaos Run Guide: Caps, Formulas & Tips
+                  Chaos Run Guide: Caps, Formulas & Tips (click to expand)
                 </summary>
                 <div className="mt-6 p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md space-y-6 text-gray-800 dark:text-gray-200">
                   <p>
