@@ -64,7 +64,7 @@ function App() {
           {/* Main Content */}
           <main className="container mx-auto px-4 py-6">
             {/* Collapsible Guide Section */}
-            <section className="mb-8 bg-gray-50 dark:bg-gray-800 rounded-lg p-4 md:p-6">
+            <section className="mb-6 bg-gray-50 dark:bg-gray-800 rounded-lg p-4 md:p-6">
               <details ref={detailsRef} className="group">
                 <summary className="cursor-pointer font-semibold text-lg text-gray-900 dark:text-white hover:text-orange-600 dark:hover:text-orange-400 transition-colors py-2 list-none">
                   Chaos Run Guide: Caps, Formulas & Tips (click to expand)
