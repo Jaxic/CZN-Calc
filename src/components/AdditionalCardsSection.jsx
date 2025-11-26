@@ -31,7 +31,7 @@ const AdditionalCardsSection = () => {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-bold text-gray-800">Additional Cards Gained</h2>
+      <h2 className="text-xl font-bold text-gray-800 dark:text-white">Additional Cards Gained</h2>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
         {/* Render existing additional cards */}
