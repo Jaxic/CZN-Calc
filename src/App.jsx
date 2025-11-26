@@ -179,7 +179,7 @@ function App() {
                 </div>
 
                 {/* Additional Cards */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 transition-colors lg:min-h-[400px]">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 md:p-6 transition-colors">
                   <AdditionalCardsSection />
                 </div>
               </div>
