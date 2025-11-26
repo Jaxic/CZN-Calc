@@ -194,7 +194,7 @@ function App() {
           </div>
 
           {/* Deck Building Guide Section */}
-          <div className="bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-gray-800 dark:to-gray-850 rounded-lg shadow-lg p-6 md:p-8 border-2 border-orange-200 dark:border-orange-900 mb-8">
+          <div className="bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-gray-800 dark:to-gray-850 rounded-lg shadow-lg p-6 md:p-8 border-2 border-orange-200 dark:border-orange-900 mt-12 mb-8">
             <h2 className="font-bold text-2xl text-gray-900 dark:text-white py-2 mb-6">
               General Deck Building Guide for Chaos Zero Nightmare
             </h2>
