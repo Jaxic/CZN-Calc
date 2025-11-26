@@ -80,13 +80,13 @@ function App() {
             </div>
 
             {/* Collapsible Guide Section */}
-            <div className="mb-8 bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-gray-800 dark:to-gray-850 rounded-lg shadow-lg p-6 md:p-8 border-2 border-orange-200 dark:border-orange-900">
+            <div className="mb-8 bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-gray-800 dark:to-gray-850 rounded-lg shadow-lg border-2 border-orange-200 dark:border-orange-900">
               <details ref={detailsRef} open className="group">
-                <summary className="cursor-pointer font-bold text-2xl text-gray-900 dark:text-white hover:text-orange-600 dark:hover:text-orange-400 transition-colors py-2 list-none flex items-center gap-2">
+                <summary className="cursor-pointer font-bold text-2xl text-gray-900 dark:text-white hover:text-orange-600 dark:hover:text-orange-400 transition-colors p-6 md:p-8 list-none flex items-center gap-2 rounded-lg">
                   Chaos Run Guide: Caps, Formulas & Tips
                   <span className="ml-auto text-sm text-gray-500 dark:text-gray-400 group-open:rotate-180 transition-transform">▼</span>
                 </summary>
-                <div className="mt-6 space-y-6 text-gray-800 dark:text-gray-200">
+                <div className="px-6 md:px-8 pb-6 md:pb-8 space-y-6 text-gray-800 dark:text-gray-200">
                   <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
                     <p>
                       <strong>Chaos Zero Nightmare (CZN)</strong> is Smilegate's hit gacha roguelike RPG – build decks with 3 characters (Strikers + Partners), battle cosmic horrors in loop runs. Chaos Runs (Zero System) are endgame: farm "Save Data" for permanent upgrades like card copies & epiphanies. But overcap "Cap Faint Memory" and the game auto-prunes your deck! This calc tracks points live to max Tier 14+ saves.
