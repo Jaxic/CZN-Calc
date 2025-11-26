@@ -192,6 +192,107 @@ function App() {
               </div>
             </div>
           </div>
+
+          {/* Deck Building Guide Section */}
+          <div className="bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-gray-800 dark:to-gray-850 rounded-lg shadow-lg p-6 md:p-8 border-2 border-orange-200 dark:border-orange-900 mb-8">
+            <h2 className="font-bold text-2xl text-gray-900 dark:text-white py-2 mb-6">
+              General Deck Building Guide for Chaos Zero Nightmare
+            </h2>
+
+            <div className="space-y-6 text-gray-800 dark:text-gray-200">
+              {/* Core Principles */}
+              <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
+                <h3 className="font-bold text-xl mb-4 text-orange-600 dark:text-orange-400 border-b-2 border-orange-200 dark:border-orange-800 pb-2">
+                  Core Deck Building Principles
+                </h3>
+                <div className="space-y-3">
+                  <div className="pl-4 border-l-4 border-orange-300 dark:border-orange-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Optimal Deck Size:</p>
+                    <p className="text-sm">Keep your deck between 12-15 cards for best results. Smaller decks cycle faster through your key cards, while larger decks offer more variety but less consistency.</p>
+                  </div>
+                  <div className="pl-4 border-l-4 border-yellow-300 dark:border-yellow-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Card Ratio Balance:</p>
+                    <p className="text-sm">Aim for approximately 50% attack cards, 30% support cards, and 20% defense cards. Adjust this based on content - add more defense for tough bosses, or lean into attack cards when farming.</p>
+                  </div>
+                  <div className="pl-4 border-l-4 border-orange-300 dark:border-orange-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Energy Cost Management:</p>
+                    <p className="text-sm">Balance your deck with both low-cost cards (1 energy) for consistent plays and high-cost cards (3+ energy) for powerful finishing moves. This ensures you can always make meaningful plays each turn.</p>
+                  </div>
+                  <div className="pl-4 border-l-4 border-yellow-300 dark:border-yellow-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Hand Limit Awareness:</p>
+                    <p className="text-sm">The hand limit is 10 cards. Avoid building "greed decks" that over-retain cards, as card draw should equal or slightly exceed card usage to prevent hand clogs.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Key Mechanics */}
+              <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
+                <h3 className="font-bold text-xl mb-4 text-orange-600 dark:text-orange-400 border-b-2 border-orange-200 dark:border-orange-800 pb-2">
+                  Key Mechanics to Master
+                </h3>
+                <ul className="space-y-3">
+                  <li className="pl-4 border-l-4 border-orange-300 dark:border-orange-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Epiphany System:</p>
+                    <p className="text-sm">Certain cards become significantly stronger when upgraded with Epiphanies. Prioritize cards that benefit from Epiphany buffs, especially for your main damage dealers.</p>
+                  </li>
+                  <li className="pl-4 border-l-4 border-yellow-300 dark:border-yellow-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Card Cycling:</p>
+                    <p className="text-sm">Use discard, exhaust, and recursion cards to manage your deck actively. Remove or cycle unwanted cards during Chaos runs through Unknown Events or Dellang's Shop.</p>
+                  </li>
+                  <li className="pl-4 border-l-4 border-orange-300 dark:border-orange-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Synergy Over Rarity:</p>
+                    <p className="text-sm">Choose cards that naturally chain together rather than just picking the highest rarity cards. A well-synergized deck of common cards often outperforms a collection of unrelated rare cards.</p>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Strategy Tips */}
+              <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
+                <h3 className="font-bold text-xl mb-4 text-orange-600 dark:text-orange-400 border-b-2 border-orange-200 dark:border-orange-800 pb-2">
+                  General Strategy Tips
+                </h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-orange-50 dark:bg-gray-600 rounded p-3">
+                    <p className="font-semibold text-gray-900 dark:text-white mb-1">Thin Your Deck</p>
+                    <p className="text-sm">During Chaos Manifestation runs, actively remove unwanted cards when opportunities arise. A leaner deck means you'll draw your best cards more consistently.</p>
+                  </div>
+                  <div className="bg-yellow-50 dark:bg-gray-600 rounded p-3">
+                    <p className="font-semibold text-gray-900 dark:text-white mb-1">Match Team Composition</p>
+                    <p className="text-sm">Build your deck around your team's core strategy. For example, if running a follow-up attack team, prioritize cards that trigger or benefit from follow-ups.</p>
+                  </div>
+                  <div className="bg-orange-50 dark:bg-gray-600 rounded p-3">
+                    <p className="font-semibold text-gray-900 dark:text-white mb-1">Equipment Doesn't Affect Points</p>
+                    <p className="text-sm">Remember that equipment doesn't contribute to your deck's TB (Save Data) value, so you can equip the best gear without worrying about exceeding tier caps.</p>
+                  </div>
+                  <div className="bg-yellow-50 dark:bg-gray-600 rounded p-3">
+                    <p className="font-semibold text-gray-900 dark:text-white mb-1">Resource Priority</p>
+                    <p className="text-sm">Focus early resources on core characters you enjoy playing. Save premium currency for stamina refreshes and key character pulls rather than cosmetic items.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Common Mistakes */}
+              <div className="bg-red-50 dark:bg-gray-700 rounded-lg p-5 shadow-md border-2 border-red-200 dark:border-red-900">
+                <h3 className="font-bold text-xl mb-4 text-red-600 dark:text-red-400 border-b-2 border-red-200 dark:border-red-800 pb-2">
+                  Common Mistakes to Avoid
+                </h3>
+                <ul className="space-y-2 text-sm list-disc pl-5">
+                  <li>
+                    <span className="font-semibold text-gray-900 dark:text-white">Card Overload:</span> Adding too many high-cost cards can leave you with unplayable hands
+                  </li>
+                  <li>
+                    <span className="font-semibold text-gray-900 dark:text-white">Ignoring Defense:</span> Pure damage builds often crumble against bosses without some defensive options
+                  </li>
+                  <li>
+                    <span className="font-semibold text-gray-900 dark:text-white">Poor Card Management:</span> Not exhausting or cycling cards leads to drawing the same unwanted cards repeatedly
+                  </li>
+                  <li>
+                    <span className="font-semibold text-gray-900 dark:text-white">Mixing Strategies:</span> Trying to do everything makes your deck unfocused - commit to a clear game plan
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </main>
 
           {/* Footer */}
