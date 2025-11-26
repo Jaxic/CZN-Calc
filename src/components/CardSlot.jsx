@@ -131,7 +131,7 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
         <>
           <div className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">LOCKED</div>
           {card.cardName && (
-            <div className="text-sm font-bold text-gray-900 dark:text-gray-900 mt-2 px-2 py-1 text-center line-clamp-2 bg-white bg-opacity-80 rounded">
+            <div className="text-sm font-bold text-gray-900 dark:text-gray-900 mt-2 px-2 py-1 text-center line-clamp-3 bg-white bg-opacity-80 rounded">
               {card.cardName}
             </div>
           )}
@@ -154,7 +154,7 @@ const CardSlot = ({ card, onClick, isAddButton = false }) => {
               )}
             </>
           ) : card.cardName ? (
-            <div className="text-sm font-bold text-gray-800 dark:text-gray-100 mb-1 px-2 text-center line-clamp-2 leading-tight">
+            <div className="text-sm font-bold text-gray-800 dark:text-gray-100 mb-1 px-2 text-center line-clamp-3 leading-tight">
               {card.cardName}
             </div>
           ) : (

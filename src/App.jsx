@@ -22,14 +22,17 @@ function App() {
     const details = detailsRef.current;
     if (!details) return;
 
-    // Check localStorage and set initial state (default is collapsed)
-    if (localStorage.getItem('czn-guide-expanded') === 'true') {
+    // Default is expanded; collapse if user previously hid it
+    if (localStorage.getItem('czn-guide-collapsed') === 'true') {
+      details.removeAttribute('open');
+    } else {
       details.setAttribute('open', '');
     }
 
-    // Listen for toggle events
+    // Listen for toggle events and remember collapsed state
     const handleToggle = () => {
-      localStorage.setItem('czn-guide-expanded', details.open);
+      const isCollapsed = !details.open;
+      localStorage.setItem('czn-guide-collapsed', isCollapsed ? 'true' : 'false');
     };
 
     details.addEventListener('toggle', handleToggle);
@@ -63,11 +66,24 @@ function App() {
 
           {/* Main Content */}
           <main className="container mx-auto px-4 py-6">
+            {/* 1. Leaderboard right under the orange header – highest visibility */}
+            <div className="text-center my-8">
+              <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7093395988392599"
+                      crossOrigin="anonymous"></script>
+              <ins className="adsbygoogle"
+                   style={{display:"block"}}
+                   data-ad-client="ca-pub-7093395988392599"
+                   data-ad-slot="4985223624"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+              <script dangerouslySetInnerHTML={{__html: "(adsbygoogle = window.adsbygoogle || []).push({});"}} />
+            </div>
+
             {/* Collapsible Guide Section */}
-            <section className="mb-6 bg-gray-50 dark:bg-gray-800 rounded-lg p-4 md:p-6">
-              <details ref={detailsRef} className="group">
+            <section className="mb-8 bg-gray-50 dark:bg-gray-800 rounded-lg p-4 md:p-6">
+              <details ref={detailsRef} open className="group">
                 <summary className="cursor-pointer font-semibold text-lg text-gray-900 dark:text-white hover:text-orange-600 dark:hover:text-orange-400 transition-colors py-2 list-none">
-                  Chaos Run Guide: Caps, Formulas & Tips (click to expand)
+                  Chaos Run Guide: Caps, Formulas & Tips
                 </summary>
                 <div className="mt-6 p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md space-y-6 text-gray-800 dark:text-gray-200">
                   <p>
@@ -116,6 +132,17 @@ function App() {
                 </div>
               </details>
             </section>
+
+            {/* 2. Optional second ad – large rectangle under the guide (great CTR) */}
+            <div className="max-w-4xl mx-auto my-10 text-center">
+              <ins className="adsbygoogle"
+                   style={{display:"block"}}
+                   data-ad-client="ca-pub-7093395988392599"
+                   data-ad-slot="4985223624"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+              <script dangerouslySetInnerHTML={{__html: "(adsbygoogle = window.adsbygoogle || []).push({});"}} />
+            </div>
 
             {/* Known Issues - Collapsible */}
             <KnownIssuesSection />
