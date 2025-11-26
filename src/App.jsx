@@ -194,96 +194,105 @@ function App() {
           </div>
 
           {/* Deck Building Guide Section */}
-          <section className="container mx-auto px-4 mb-8">
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 md:p-6">
-              <h2 className="font-semibold text-lg text-gray-900 dark:text-white mb-4">
-                General Deck Building Guide for Chaos Zero Nightmare
-              </h2>
+          <div className="bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-gray-800 dark:to-gray-850 rounded-lg shadow-lg p-6 md:p-8 border-2 border-orange-200 dark:border-orange-900 mb-8">
+            <h2 className="font-bold text-2xl text-gray-900 dark:text-white py-2 mb-6">
+              General Deck Building Guide for Chaos Zero Nightmare
+            </h2>
 
-              <div className="bg-white dark:bg-gray-700 rounded-lg shadow-md p-6 space-y-6 text-gray-800 dark:text-gray-200">
-                  {/* Core Principles */}
-                  <div>
-                    <h3 className="font-bold text-lg mb-2">
-                      Core Deck Building Principles
-                    </h3>
-                    <ul className="list-disc pl-5 space-y-1 text-sm">
-                      <li>
-                        <strong>Optimal Deck Size:</strong> Keep your deck between 12-15 cards for best results. Smaller decks cycle faster through your key cards, while larger decks offer more variety but less consistency.
-                      </li>
-                      <li>
-                        <strong>Card Ratio Balance:</strong> Aim for approximately 50% attack cards, 30% support cards, and 20% defense cards. Adjust this based on content - add more defense for tough bosses, or lean into attack cards when farming.
-                      </li>
-                      <li>
-                        <strong>Energy Cost Management:</strong> Balance your deck with both low-cost cards (1 energy) for consistent plays and high-cost cards (3+ energy) for powerful finishing moves. This ensures you can always make meaningful plays each turn.
-                      </li>
-                      <li>
-                        <strong>Hand Limit Awareness:</strong> The hand limit is 10 cards. Avoid building "greed decks" that over-retain cards, as card draw should equal or slightly exceed card usage to prevent hand clogs.
-                      </li>
-                    </ul>
+            <div className="space-y-6 text-gray-800 dark:text-gray-200">
+              {/* Core Principles */}
+              <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
+                <h3 className="font-bold text-xl mb-4 text-orange-600 dark:text-orange-400 border-b-2 border-orange-200 dark:border-orange-800 pb-2">
+                  Core Deck Building Principles
+                </h3>
+                <div className="space-y-3">
+                  <div className="pl-4 border-l-4 border-orange-300 dark:border-orange-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Optimal Deck Size:</p>
+                    <p className="text-sm">Keep your deck between 12-15 cards for best results. Smaller decks cycle faster through your key cards, while larger decks offer more variety but less consistency.</p>
                   </div>
+                  <div className="pl-4 border-l-4 border-yellow-300 dark:border-yellow-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Card Ratio Balance:</p>
+                    <p className="text-sm">Aim for approximately 50% attack cards, 30% support cards, and 20% defense cards. Adjust this based on content - add more defense for tough bosses, or lean into attack cards when farming.</p>
+                  </div>
+                  <div className="pl-4 border-l-4 border-orange-300 dark:border-orange-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Energy Cost Management:</p>
+                    <p className="text-sm">Balance your deck with both low-cost cards (1 energy) for consistent plays and high-cost cards (3+ energy) for powerful finishing moves. This ensures you can always make meaningful plays each turn.</p>
+                  </div>
+                  <div className="pl-4 border-l-4 border-yellow-300 dark:border-yellow-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Hand Limit Awareness:</p>
+                    <p className="text-sm">The hand limit is 10 cards. Avoid building "greed decks" that over-retain cards, as card draw should equal or slightly exceed card usage to prevent hand clogs.</p>
+                  </div>
+                </div>
+              </div>
 
-                  {/* Key Mechanics */}
-                  <div>
-                    <h3 className="font-bold text-lg mb-2">
-                      Key Mechanics to Master
-                    </h3>
-                    <ul className="list-disc pl-5 space-y-1 text-sm">
-                      <li>
-                        <strong>Epiphany System:</strong> Certain cards become significantly stronger when upgraded with Epiphanies. Prioritize cards that benefit from Epiphany buffs, especially for your main damage dealers.
-                      </li>
-                      <li>
-                        <strong>Card Cycling:</strong> Use discard, exhaust, and recursion cards to manage your deck actively. Remove or cycle unwanted cards during Chaos runs through Unknown Events or Dellang's Shop.
-                      </li>
-                      <li>
-                        <strong>Synergy Over Rarity:</strong> Choose cards that naturally chain together rather than just picking the highest rarity cards. A well-synergized deck of common cards often outperforms a collection of unrelated rare cards.
-                      </li>
-                    </ul>
-                  </div>
+              {/* Key Mechanics */}
+              <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
+                <h3 className="font-bold text-xl mb-4 text-orange-600 dark:text-orange-400 border-b-2 border-orange-200 dark:border-orange-800 pb-2">
+                  Key Mechanics to Master
+                </h3>
+                <ul className="space-y-3">
+                  <li className="pl-4 border-l-4 border-orange-300 dark:border-orange-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Epiphany System:</p>
+                    <p className="text-sm">Certain cards become significantly stronger when upgraded with Epiphanies. Prioritize cards that benefit from Epiphany buffs, especially for your main damage dealers.</p>
+                  </li>
+                  <li className="pl-4 border-l-4 border-yellow-300 dark:border-yellow-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Card Cycling:</p>
+                    <p className="text-sm">Use discard, exhaust, and recursion cards to manage your deck actively. Remove or cycle unwanted cards during Chaos runs through Unknown Events or Dellang's Shop.</p>
+                  </li>
+                  <li className="pl-4 border-l-4 border-orange-300 dark:border-orange-700">
+                    <p className="font-semibold text-gray-900 dark:text-white">Synergy Over Rarity:</p>
+                    <p className="text-sm">Choose cards that naturally chain together rather than just picking the highest rarity cards. A well-synergized deck of common cards often outperforms a collection of unrelated rare cards.</p>
+                  </li>
+                </ul>
+              </div>
 
-                  {/* Strategy Tips */}
-                  <div>
-                    <h3 className="font-bold text-lg mb-2">
-                      General Strategy Tips
-                    </h3>
-                    <ul className="list-disc pl-5 space-y-1 text-sm">
-                      <li>
-                        <strong>Thin Your Deck:</strong> During Chaos Manifestation runs, actively remove unwanted cards when opportunities arise. A leaner deck means you'll draw your best cards more consistently.
-                      </li>
-                      <li>
-                        <strong>Match Team Composition:</strong> Build your deck around your team's core strategy. For example, if running a follow-up attack team, prioritize cards that trigger or benefit from follow-ups.
-                      </li>
-                      <li>
-                        <strong>Equipment Doesn't Affect Points:</strong> Remember that equipment doesn't contribute to your deck's TB (Save Data) value, so you can equip the best gear without worrying about exceeding tier caps.
-                      </li>
-                      <li>
-                        <strong>Resource Priority:</strong> Focus early resources on core characters you enjoy playing. Save premium currency for stamina refreshes and key character pulls rather than cosmetic items.
-                      </li>
-                    </ul>
+              {/* Strategy Tips */}
+              <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
+                <h3 className="font-bold text-xl mb-4 text-orange-600 dark:text-orange-400 border-b-2 border-orange-200 dark:border-orange-800 pb-2">
+                  General Strategy Tips
+                </h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-orange-50 dark:bg-gray-600 rounded p-3">
+                    <p className="font-semibold text-gray-900 dark:text-white mb-1">Thin Your Deck</p>
+                    <p className="text-sm">During Chaos Manifestation runs, actively remove unwanted cards when opportunities arise. A leaner deck means you'll draw your best cards more consistently.</p>
                   </div>
+                  <div className="bg-yellow-50 dark:bg-gray-600 rounded p-3">
+                    <p className="font-semibold text-gray-900 dark:text-white mb-1">Match Team Composition</p>
+                    <p className="text-sm">Build your deck around your team's core strategy. For example, if running a follow-up attack team, prioritize cards that trigger or benefit from follow-ups.</p>
+                  </div>
+                  <div className="bg-orange-50 dark:bg-gray-600 rounded p-3">
+                    <p className="font-semibold text-gray-900 dark:text-white mb-1">Equipment Doesn't Affect Points</p>
+                    <p className="text-sm">Remember that equipment doesn't contribute to your deck's TB (Save Data) value, so you can equip the best gear without worrying about exceeding tier caps.</p>
+                  </div>
+                  <div className="bg-yellow-50 dark:bg-gray-600 rounded p-3">
+                    <p className="font-semibold text-gray-900 dark:text-white mb-1">Resource Priority</p>
+                    <p className="text-sm">Focus early resources on core characters you enjoy playing. Save premium currency for stamina refreshes and key character pulls rather than cosmetic items.</p>
+                  </div>
+                </div>
+              </div>
 
-                  {/* Common Mistakes */}
-                  <div>
-                    <h3 className="font-bold text-lg mb-2">
-                      Common Mistakes to Avoid
-                    </h3>
-                    <ul className="list-disc pl-5 space-y-1 text-sm">
-                      <li>
-                        <strong>Card Overload:</strong> Adding too many high-cost cards can leave you with unplayable hands
-                      </li>
-                      <li>
-                        <strong>Ignoring Defense:</strong> Pure damage builds often crumble against bosses without some defensive options
-                      </li>
-                      <li>
-                        <strong>Poor Card Management:</strong> Not exhausting or cycling cards leads to drawing the same unwanted cards repeatedly
-                      </li>
-                      <li>
-                        <strong>Mixing Strategies:</strong> Trying to do everything makes your deck unfocused - commit to a clear game plan
-                      </li>
-                    </ul>
-                  </div>
+              {/* Common Mistakes */}
+              <div className="bg-red-50 dark:bg-gray-700 rounded-lg p-5 shadow-md border-2 border-red-200 dark:border-red-900">
+                <h3 className="font-bold text-xl mb-4 text-red-600 dark:text-red-400 border-b-2 border-red-200 dark:border-red-800 pb-2">
+                  Common Mistakes to Avoid
+                </h3>
+                <ul className="space-y-2 text-sm list-disc pl-5">
+                  <li>
+                    <span className="font-semibold text-gray-900 dark:text-white">Card Overload:</span> Adding too many high-cost cards can leave you with unplayable hands
+                  </li>
+                  <li>
+                    <span className="font-semibold text-gray-900 dark:text-white">Ignoring Defense:</span> Pure damage builds often crumble against bosses without some defensive options
+                  </li>
+                  <li>
+                    <span className="font-semibold text-gray-900 dark:text-white">Poor Card Management:</span> Not exhausting or cycling cards leads to drawing the same unwanted cards repeatedly
+                  </li>
+                  <li>
+                    <span className="font-semibold text-gray-900 dark:text-white">Mixing Strategies:</span> Trying to do everything makes your deck unfocused - commit to a clear game plan
+                  </li>
+                </ul>
               </div>
             </div>
-          </section>
+          </div>
         </main>
 
           {/* Footer */}
