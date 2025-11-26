@@ -80,18 +80,21 @@ function App() {
             </div>
 
             {/* Collapsible Guide Section */}
-            <section className="mb-8 bg-gray-50 dark:bg-gray-800 rounded-lg p-4 md:p-6">
+            <div className="mb-8 bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-gray-800 dark:to-gray-850 rounded-lg shadow-lg p-6 md:p-8 border-2 border-orange-200 dark:border-orange-900">
               <details ref={detailsRef} open className="group">
-                <summary className="cursor-pointer font-semibold text-lg text-gray-900 dark:text-white hover:text-orange-600 dark:hover:text-orange-400 transition-colors py-2 list-none">
+                <summary className="cursor-pointer font-bold text-2xl text-gray-900 dark:text-white hover:text-orange-600 dark:hover:text-orange-400 transition-colors py-2 list-none flex items-center gap-2">
                   Chaos Run Guide: Caps, Formulas & Tips
+                  <span className="ml-auto text-sm text-gray-500 dark:text-gray-400 group-open:rotate-180 transition-transform">▼</span>
                 </summary>
-                <div className="mt-6 p-6 bg-white dark:bg-gray-700 rounded-lg shadow-md space-y-6 text-gray-800 dark:text-gray-200">
-                  <p>
-                    <strong>Chaos Zero Nightmare (CZN)</strong> is Smilegate's hit gacha roguelike RPG – build decks with 3 characters (Strikers + Partners), battle cosmic horrors in loop runs. Chaos Runs (Zero System) are endgame: farm "Save Data" for permanent upgrades like card copies & epiphanies. But overcap "Cap Faint Memory" and the game auto-prunes your deck! This calc tracks points live to max Tier 14+ saves.
-                  </p>
+                <div className="mt-6 space-y-6 text-gray-800 dark:text-gray-200">
+                  <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
+                    <p>
+                      <strong>Chaos Zero Nightmare (CZN)</strong> is Smilegate's hit gacha roguelike RPG – build decks with 3 characters (Strikers + Partners), battle cosmic horrors in loop runs. Chaos Runs (Zero System) are endgame: farm "Save Data" for permanent upgrades like card copies & epiphanies. But overcap "Cap Faint Memory" and the game auto-prunes your deck! This calc tracks points live to max Tier 14+ saves.
+                    </p>
+                  </div>
 
-                  <div>
-                    <h3 className="font-bold text-lg mb-2">Cap Faint Memory Tiers</h3>
+                  <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
+                    <h3 className="font-bold text-xl mb-4 text-orange-600 dark:text-orange-400 border-b-2 border-orange-200 dark:border-orange-800 pb-2">Cap Faint Memory Tiers</h3>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
                       <div>T1: 30</div><div>T2: 40</div><div>T3: 50</div><div>T4: 60</div>
                       <div>T5: 70</div><div>T6: 80</div><div>T7: 90</div><div>T8: 100</div>
@@ -101,8 +104,8 @@ function App() {
                     <p className="text-xs mt-2">Tiers from diff + affixes/debuffs. Nightmare +1 tier. Re-observe planets for +4 tiers max.</p>
                   </div>
 
-                  <div>
-                    <h3 className="font-bold text-lg mb-2">Save Data Formula</h3>
+                  <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
+                    <h3 className="font-bold text-xl mb-4 text-orange-600 dark:text-orange-400 border-b-2 border-orange-200 dark:border-orange-800 pb-2">Save Data Formula</h3>
                     <p>Own cards: FREE (even normal epiphany). Track:</p>
                     <ul className="list-disc pl-5 space-y-1 text-sm">
                       <li>Deletes/Copies: [0,10,30,50,70] (+20 own cards)</li>
@@ -114,8 +117,8 @@ function App() {
                     <p className="font-mono bg-gray-100 dark:bg-gray-600 p-2 rounded mt-2 text-xs">Ex: 2 own deletes (50pts) + 1 divine (20) + 1 neutral epiph (30) = 100pts (T8 cap)</p>
                   </div>
 
-                  <div>
-                    <h3 className="font-bold text-lg mb-2">Pro Tips for Tier 14 Farms</h3>
+                  <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
+                    <h3 className="font-bold text-xl mb-4 text-orange-600 dark:text-orange-400 border-b-2 border-orange-200 dark:border-orange-800 pb-2">Pro Tips for Tier 14 Farms</h3>
                     <ul className="list-disc pl-5 space-y-1 text-sm">
                       <li>Copy own cards 3x FREE/cheap (0+10+30=40pts)</li>
                       <li>Avoid monsters (80pts killer)</li>
@@ -125,13 +128,15 @@ function App() {
                     </ul>
                   </div>
 
-                  <p className="text-sm border-t dark:border-gray-600 pt-4">
-                    <a href="https://discord.com/invite/chaoszeronightmare" className="underline text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300">Official Discord</a> | 
-                    <a href="https://www.reddit.com/r/ChaosZeroNightmare/" className="underline text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 ml-1">r/ChaosZeroNightmare</a>
-                  </p>
+                  <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
+                    <p className="text-sm">
+                      <a href="https://discord.com/invite/chaoszeronightmare" className="underline text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300">Official Discord</a> |
+                      <a href="https://www.reddit.com/r/ChaosZeroNightmare/" className="underline text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 ml-1">r/ChaosZeroNightmare</a>
+                    </p>
+                  </div>
                 </div>
               </details>
-            </section>
+            </div>
 
             {/* 2. Optional second ad – large rectangle under the guide (great CTR) */}
             <div className="max-w-4xl mx-auto my-10 text-center">
