@@ -17,9 +17,11 @@ import QuickToolsSection from './components/QuickToolsSection';
 
 function App() {
   const detailsRef = useRef(null);
+  const contentRef = useRef(null);
 
   useEffect(() => {
     const details = detailsRef.current;
+    const content = contentRef.current;
     if (!details) return;
 
     // Default is expanded; collapse if user previously hid it
@@ -35,10 +37,26 @@ function App() {
       localStorage.setItem('czn-guide-collapsed', isCollapsed ? 'true' : 'false');
     };
 
+    // Handle clicks on content area to collapse
+    const handleContentClick = (e) => {
+      // Don't collapse if clicking on a link
+      if (e.target.tagName === 'A' || e.target.closest('a')) {
+        return;
+      }
+      // Toggle the details element
+      details.open = !details.open;
+    };
+
     details.addEventListener('toggle', handleToggle);
+    if (content) {
+      content.addEventListener('click', handleContentClick);
+    }
 
     return () => {
       details.removeEventListener('toggle', handleToggle);
+      if (content) {
+        content.removeEventListener('click', handleContentClick);
+      }
     };
   }, []);
 
@@ -86,7 +104,7 @@ function App() {
                   Chaos Run Guide: Caps, Formulas & Tips
                   <span className="ml-auto text-sm text-gray-500 dark:text-gray-400 group-open:rotate-180 transition-transform">▼</span>
                 </summary>
-                <div className="px-6 md:px-8 pb-6 md:pb-8 space-y-6 text-gray-800 dark:text-gray-200">
+                <div ref={contentRef} className="px-6 md:px-8 pb-6 md:pb-8 space-y-6 text-gray-800 dark:text-gray-200 cursor-pointer">
                   <div className="bg-white dark:bg-gray-700 rounded-lg p-5 shadow-md">
                     <p>
                       <strong>Chaos Zero Nightmare (CZN)</strong> is Smilegate's hit gacha roguelike RPG – build decks with 3 characters (Strikers + Partners), battle cosmic horrors in loop runs. Chaos Runs (Zero System) are endgame: farm "Save Data" for permanent upgrades like card copies & epiphanies. But overcap "Cap Faint Memory" and the game auto-prunes your deck! This calc tracks points live to max Tier 14+ saves.
